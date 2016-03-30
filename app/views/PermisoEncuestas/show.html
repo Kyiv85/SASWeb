@@ -1,0 +1,257 @@
+#{extends 'Encuestas/layout.html' /}
+
+
+<script type="text/javascript">
+$(document).ready( function() {
+
+  $('#object_encuesta').change(function() {
+
+      if($('#object_encuesta').val() != ''){
+      
+          $.getJSON('/SASWeb/gen/encuestadata/'+$('#object_encuesta').val(), function(data) {
+          $('#object_modelo').val(data.modelo);
+          modelChanged();
+        });
+    }else{
+      $('#object_modelo').val('');
+      $("select#object_encuestaValidador").val('');
+    }
+  });
+
+  $('#object_ceco').change(function() {
+
+    if($('#object_ceco').val() != ''){
+      
+    $.getJSON('/SASWeb/gen/userdata/'+$('#object_ceco').val(), function(data) {
+
+      if (isEmpty(data) ){
+        $("select#object_usuario").val("");
+      }else{
+        $("select#object_usuario").val(data.usuario.id);
+      }
+    });
+
+    }
+         
+     });
+
+    function modelChanged() {
+
+      var escenario = $("select#object_escenario").val();
+      var periodo = $("select#object_periodo").val();
+      var ceco =  $("select#object_ceco").val();
+      var encuesta = $("select#object_encuestaValidador").val();
+      
+      if($('#object_modelo').val() != ''){
+
+          $.getJSON('/SASWeb/gen/permisodata/'+$('#object_modelo').val(), function(j) {
+
+           // Escenario
+             var options = '';
+             for (var i = 0; i < j.escenario.length; i++) {
+               options += '<option value="' + j.escenario[i].optionValue + '">' + j.escenario[i].optionDisplay + '</option>';
+             }
+             $("select#object_escenario").html(options).val(escenario);
+                
+              // CECO
+             var options = '';
+             for (var i = 0; i < j.ceco.length; i++) {
+               options += '<option value="' + j.ceco[i].optionValue + '">' + j.ceco[i].optionDisplay + '</option>';
+             }
+             $("select#object_ceco").html(options).val(ceco);
+
+             // Encuestas por modelo
+             var options = '';
+             if(j.encuestas[0] != null){
+                 
+               for (var i = 0; i < j.encuestas.length; i++) {
+                     options += '<option value="' + j.encuestas[i].optionValue + '">' + j.encuestas[i].optionDisplay + '</option>';
+                     }
+                 $("select#object_encuestaValidador").html(options).val(encuesta);
+               
+             }else{
+               $("select#object_encuestaValidador").html("");
+             }
+
+             // Periodo
+             var options = '';
+             for (var i = 0; i < j.periodo.length; i++) {
+               options += '<option value="' + j.periodo[i].optionValue + '">' + j.periodo[i].optionDisplay + '</option>';
+             }
+             $("select#object_periodo").html(options).val(periodo);;
+           
+         });
+    }
+     }
+
+    function isEmpty(obj) {
+    for(var prop in obj) {
+      if(obj.hasOwnProperty(prop))
+        return false;
+    }
+    return true;
+  }
+    
+
+    $('#object_encuesta').change();
+   
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready( function() {
+     
+});
+</script>
+
+<div id="crudShow" class="${type.name}">
+  
+  <h2 id="crudShowTitle">Editar Asignar Cuestionario</h2>
+  
+  <div class="objectForm">
+  #{form action:@save(object.id), enctype:'multipart/form-data'}
+    #{crud.form  fields:['__Activo', 'encuesta', 'periodo', 'escenario', 'usuario', 'revisor',  'status']}
+    
+    <!--No cambiar CECO, ni modelo ni encuesta validador al 28-01-2016
+    #{crud.custom  'modelo'}
+     <label for="object_modelo">
+          Modelo:
+    </label>        
+    <input id="object_modelo" readonly="readonly" class="gray" type="text" name="object.modelo" value="" size="50">
+    #{/crud.custom }
+    
+    #{crud.custom  'ceco'}
+     <label for="object_ceco">
+          CECO:
+        </label>
+        <select id="object_ceco" name="object.ceco">
+           <option value="${object.ceco}" selected="selected" >${object.ceco}</option>
+          </select>
+               #{ifError 'object.ceco'}
+		              <span class="error">Requerido</span>
+		        #{/ifError} 
+		        <span class="crudHelp">
+                   Requerido.
+                 </span>
+    #{/crud.custom }
+
+    -->
+    
+    #{crud.custom  'periodo'}
+     <label for="object_periodo">
+          Periodo:
+        </label>
+        <select id="object_periodo" name="object.periodo">
+        <option value="${object.periodo}" selected="selected" >${object.periodo}</option>
+          </select>
+                #{ifError 'object.periodo'}
+		              <span class="error">Requerido</span>
+		         #{/ifError}
+               <span class="crudHelp">
+                   Requerido.
+                 </span>
+    #{/crud.custom }
+    
+    #{crud.custom  'escenario'}
+     <label for="object_escenario">
+          Escenario:
+        </label>
+        <select id="object_escenario" name="object.escenario">
+        <option value="${object.escenario}" selected="selected" >${object.escenario}</option>
+          </select>
+               #{ifError 'object.escenario'}
+		              <span class="error">Requerido</span>
+		         #{/ifError}
+               <span class="crudHelp">
+                   Requerido.
+                 </span>
+    #{/crud.custom }
+    
+    <!--    
+    #{crud.custom  'encuestaValidador'}
+     <label for="object_encuestaValidador">
+          Cuestionario Validador:
+        </label>
+        <select id="object_encuestaValidador" name="object.encuestaValidador.id">
+        
+         #{if object.encuestaValidador }
+             <option value="${object.encuestaValidador.id}" selected="selected" >${object.encuestaValidador}</option>
+         #{/if}
+           
+          </select>
+               #{ifError 'object.encuestaValidador'}
+		              <span class="error">Requerido</span>
+		         #{/ifError}
+		         <span class="crudHelp">
+                   Requerido.
+                 </span>
+    #{/crud.custom }
+    -->
+
+
+    #{crud.custom 'usuario'}
+      <label for="object_usuario">
+        Usuario Registrador:
+      </label>
+      <select id="object_usuario" name="object.usuario.id">
+        #{list items:usuarios, as:'elem'}
+          #{if object.usuario.equals(elem) }
+            <option value="${elem.id}" selected="true" >${elem}</option>
+          #{/if}
+          #{else}
+            <option value="${elem.id}">${elem}</option>
+          #{/else}
+        #{/list} 
+      </select>
+      #{ifError 'object.usuario'}
+        <span class="error">Requerido</span>
+      #{/ifError}
+      <span class="crudHelp">
+        Requerido.
+      </span>
+    #{/crud.custom }
+
+
+
+    #{crud.custom 'revisor'}
+     <label for="object_revisor">
+          &{'revisor'} :
+    </label>
+        <select id="object_revisor" name="object.revisor.id">
+         #{list items:revisores, as:'elem'}
+          
+           #{if object.revisor.equals(elem) }
+                  <option value="${elem.id}" selected="true" >${elem}</option>
+           #{/if}
+           #{else}
+           <option value="${elem.id}">${elem}</option>
+          #{/else}
+        #{/list} 
+            </select>
+             #{ifError 'object.revisor'}
+                         <span class="error">Requerido</span>
+		     #{/ifError}
+               <span class="crudHelp">
+                   Requerido.
+                 </span>
+    #{/crud.custom }
+    
+    #{/crud.form}
+        
+    <p class="crudButtons">
+      <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+      <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+    </p>
+  #{/form}
+  </div>
+  
+  #{form @delete(object.id)}
+    
+    <p class="crudDelete">
+    <input type="submit" value="&{'crud.delete', type.modelName}" />
+    </p>
+  #{/form}
+  
+</div>

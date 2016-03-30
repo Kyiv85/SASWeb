@@ -1,0 +1,158 @@
+#{extends 'PermisoEncuestas/layout.html' /}
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+   $('#comboAnio').change(function() {
+    $('#status').text(" ");
+   });
+
+   $('#comboPeriodo').change(function() {
+    $('#status').text(" ");
+   });
+
+   $('#comboEscenario').change(function() {
+    $('#status').text(" ");
+   });
+
+  $('.execute-etl').click(function(event) {
+    if ($('#comboAnio').val() == 'Seleccione') {
+      $('#status').text("Por favor elije un valor para año").css("color","red").delay(5000).fadeTo("fast",100);
+    } 
+
+    /*else if($('#comboPeriodo').val() == 'Seleccione') {
+      $('#status').text("Por favor elije un valor para periodo").css("color","red").delay(5000).fadeTo("fast",100);
+    }*/ 
+
+    else if ($('#comboEscenario').val() == 'Seleccione') {
+      $('#status').text("Por favor elije un valor para escenario").css("color","red").delay(5000).fadeTo("fast",100);
+    }
+
+    else { 
+    var dperiodo = $('#comboAnio').val();
+    var descenario = $('#comboEscenario').val();
+
+    $('#status').text("Espere por favor.....").css("color","green").delay(5000).fadeTo("fast",100);
+
+    $.ajax({
+    method: "GET",
+    url: "@{Application.cargaInicialETS()}",
+    data: { periodo: dperiodo, escenario: descenario },
+    success:function(data) {
+      alert("Data: " + data + ", periodo: " + dperiodo + ", escenario: " + descenario);
+      if (data == "false") {
+        $('#status').text("No se pudo procesar la información en el período seleccionado").css("color","red").delay(5000).fadeTo("fast",100);
+      };
+
+      if ((data !="true") && (data !="false")){
+        $('#status').text("Error corriendo la transformación!!!").css("color","red").delay(5000).fadeTo("fast",100);
+      }
+      
+      if (data == "true") {
+          $('#status').text("Enviando....").css("color","green").delay(5000).fadeTo("fast",100);
+
+       $.PeriodicalUpdater('/carga_inicial/log', {
+          method: 'get',          // method; get or post
+          data: '',               // array of values to be passed to the page - e.g. {name: "John", greeting: "hello"}
+          minTimeout: 1000,       // starting value for the timeout in milliseconds
+          maxTimeout: 8000,       // maximum length of time between requests
+          multiplier: 2,          // if set to 2, timerInterval will double each time the response hasn't changed (up to maxTimeout)
+          type: 'text',           // response type - text, xml, json, etc.  See $.ajax config options
+          maxCalls: 0,            // maximum number of calls. 0 = no limit.
+          autoStop: 0             // automatically stop requests after this many returns of the same data. 0 = disabled.
+      }, function(data) {
+          $('#status').text(data).css("color","green");
+      });
+
+
+      };
+    }
+   });
+       event.preventDefault();
+       return false;
+    } 
+  });
+});
+</script>
+
+<span id="status" class="status" ></span>
+
+<div id="crudIndex" style="width:100%;overflow:hidden;">
+  <h2>Carga Inicial</h2>
+  <br>
+  <table>
+    <thead>
+      <tr>
+        <th width="90%">&{'crud.index.elements'}</th>
+        <th width="10%"></th>        
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <b>Año</b>
+        </td>
+        <td>
+          <b>
+          <select name='comboAnio' id= 'comboAnio'>
+            <option value="Seleccione">--Seleccione--</option>
+            #{list items:fechas, as:'elem'}
+              <option value="${elem.anho}">${elem.anho}</option>
+            #{/list}
+          </select>
+          </b>
+        </td>
+      </tr>
+      <!--<tr>
+        <td>
+          <b>Periodo</b>
+        </td>
+        <td>
+          <b>
+          <select name='comboPeriodo' id= 'comboPeriodo'>
+            <option value="Seleccione">--Seleccione--</option>
+            <option value="A">Año Elegido</option>
+            <option value="M1">Enero</option>
+            <option value="M2">Febrero</option>
+            <option value="M3">Marzo</option>
+            <option value="M4">Abril</option>
+            <option value="M5">Mayo</option>
+            <option value="M6">Junio</option>
+            <option value="M7">Julio</option>
+            <option value="M8">Agosto</option>
+            <option value="M9">Septiembre</option>
+            <option value="M10">Octubre</option>
+            <option value="M11">Noviembre</option>
+            <option value="M12">Diciembre</option>
+            <option value="S1">Primer Semestre</option>
+            <option value="S2">Segundo Semestre</option>
+            <option value="T1">Primer Trimestre</option>
+            <option value="T2">Segundo Trimestre</option>
+            <option value="T3">Tercer Trimestre</option>
+            <option value="T4">Cuarto Trimestre</option>
+          </select>
+          </b>
+        </td>
+      </tr>-->  
+        <td>
+          <b>Escenario</b>
+        </td>
+        <td>
+          <b>
+          <select name='comboEscenario' id= 'comboEscenario'>
+            <option value="Seleccione">--Seleccione--</option>
+            <option value="ACTUAL">ACTUAL</option>
+          </select>
+          </b>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td class="crudNew">
+          <a class="execute-etl" id="editBtn" name="1" href="#"><b>Ejecutar</b></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+</div>

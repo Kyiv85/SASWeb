@@ -1,0 +1,54 @@
+#{extends 'Encuestas/layout.html' /}
+<script type="text/javascript">
+	
+	$('document').ready(function(){
+		$('#object_tipo').attr("disabled",true);
+		$('#object_tipo').val('2');
+		$("form").submit(function(){
+			$('#object_tipo').attr("disabled",false);
+		}); 
+	});
+
+</script>
+
+<div id="crudBlank" class="${type.name}">
+	<h2 id="crudBlankTitle">Agregar Cuestionario</h2>
+	<div class="objectForm">
+	#{form action:@create(), enctype:'multipart/form-data'}
+	
+		#{crud.form  fields:['nombre', 'modelo', 'tipo']}
+			#{crud.custom  'modelo'}
+		 <label for="object_modelo">
+					Modelo:
+				</label>
+				<select id="object_modelo" name="object.modelo">
+				 	#{list items:modelos, as:'elem'}
+			 
+			 	      #{if object.modelo == elem.Nombre }
+			 	           <option value="${elem.Nombre}" selected="true" >${elem.Nombre}</option>
+			 	      #{/if}
+                      #{else}
+                           <option value="${elem.Nombre}">${elem.Nombre}</option>
+                      #{/else}
+			
+					#{/list} 
+		        </select>
+		        #{ifError 'object.modelo'}
+		         <span class="error">Requerido</span>
+		         #{/ifError}
+		   
+		           <span class="crudHelp">
+      		         Requerido.
+      		       </span>
+		#{/crud.custom }
+				
+		#{/crud.form}
+		
+		<p class="crudButtons">
+			<input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+			<input type="submit" name="_saveAndAddAnother" value="&{'crud.saveAndAddAnother', type.modelName}" />
+		</p>
+	#{/form}
+	</div>
+
+</div>

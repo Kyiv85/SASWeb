@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>${get('title') ?: 'CANTV'} </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.ico'}">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/crud.css'}" />
+		<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
+		<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/javascripts/jquery.alerts.css'}" />
+		<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/jquery-ui-1.8.1.custom.css'}" />
+		<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/ui.jqgrid.css'}" />
+
+		<script src="@{'/public/javascripts/jquery-1.4.min.js'}" type="text/javascript" charset="utf-8"></script>
+        <script src="@{'/public/javascripts/jquery.alerts.js'}" type="text/javascript" charset="utf-8"></script>
+
+		<script src="@{'/public/javascripts/jqgrid/grid.locale-en.js'}" type="text/javascript"></script>
+		<script src="@{'/public/javascripts/jqgrid/jquery.jqGrid.min.js'}" type="text/javascript"></script>
+
+    </head>
+	<body id="crud">
+
+		<div id="crudHeader">
+			<a href="/SASWeb/application/main"><img src="@{'/public/images/logo.gif'}" alt="Logo"></a>
+			<h2 class="red">&{'admin.title'}</h2>
+			<h3 class="red">&{'admin.subtitle'}</h3>
+			<nobr class ="logout">
+			<span><a id=":r4" href="/SASWeb/" >Inicio</a></span>  | <span><a id=":r4" href="@{'/ayuda'}" target="_blank">Ayuda</a></span>  | <a target="_top" href="@{'/logout'}" id=":r7" >&{'application.logout'}</a>
+			</nobr>
+		</div>
+
+		<div style="float: right;">
+ 		<b>Usuario: ${session.user.raw()}</b>
+		</div>
+
+		#{if flash.success}
+			<div class="crudFlash flashSuccess">
+				${flash.success}
+			</div>
+		#{/if}
+		#{if flash.error || error}
+			<div class="crudFlash flashError">
+				${error ?: flash.error}
+			</div>
+		#{/if}
+
+		<div id="crudContent">
+			#{doLayout /}
+		</div>
+
+		<div id="crudFooter">
+			Compañia Anónima Nacional Teléfonos de Venezuela. RIF: J-00124134-5.- Todos los derechos reservados
+		</div>
+	</body>
+</html>

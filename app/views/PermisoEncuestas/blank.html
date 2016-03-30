@@ -1,0 +1,208 @@
+#{extends 'PermisoEncuestas/layout.html' /}
+
+<script type="text/javascript">
+$(document).ready( function() {
+
+  $('#object_encuesta').change(function() {
+
+    $('select#object_status').val(1);
+    $('select#object_status').attr("disabled",true);
+
+    $('select#object_funcional_rol').val(3);
+    $('select#object_funcional_rol').attr("disabled",true);
+    //$('select#object_funcional_rol').attr("hidden",true);*/
+
+    if($('#object_encuesta').val() != ''){
+      
+          $.getJSON('/SASWeb/gen/encuestadata/'+$('#object_encuesta').val(), function(data) {
+          $('#object_modelo').val(data.modelo);
+          //$("select#object_encuestaValidador").html("");
+          modelChanged();
+          
+        });
+    }else{
+      $('#object_modelo').val('');
+      //$("select#object_encuestaValidador").val('');
+    }
+  });
+
+  $('#object_ceco').change(function() {
+
+    if($('#object_ceco').val() != ''){
+
+      
+    $.getJSON('/SASWeb/gen/userdata/'+$('#object_ceco').val(), function(data) {
+
+      if (isEmpty(data) ){
+        $("select#object_usuario").val("");
+      }else{
+        $("select#object_usuario").val(data.usuario.id);
+      }
+    });
+
+    }else{
+      $('#object_modelo').val('');
+    }
+         
+     });
+
+    function modelChanged() {
+
+        if($('#object_modelo').val() != ''){
+
+          $.getJSON('/SASWeb/gen/permisodata/'+$('#object_modelo').val(), function(j) {
+          
+             // CECO
+             //var currentCECO = $("select#object_ceco").val()
+             var options = '';
+             for (var i = 0; i < j.ceco.length; i++) {
+               options += '<option value="' + j.ceco[i].optionValue + '">' + j.ceco[i].optionDisplay + '</option>';
+             }
+             $("select#object_ceco").html(options);
+             //$("select#object_ceco").val(currentCECO);
+            
+             // Periodo
+             //var currentPeriodo = $("select#object_periodo").val()
+             var options = '';
+             for (var i = 0; i < j.periodo.length; i++) {
+               options += '<option value="' + j.periodo[i].optionValue + '">' + j.periodo[i].optionDisplay + '</option>';
+             }
+             $("select#object_periodo").html(options);
+             //$("select#object_periodo").val(currentPeriodo);
+
+
+
+
+
+             // Encuestas Validador
+             //var currentValidador = $("select#object_encuestaValidador").val()
+             
+             var options = '';
+             for (var i = 0; i < j.encuestas.length; i++) {
+               options += '<option value="' + j.encuestas[i].optionValue + '">' + j.encuestas[i].optionDisplay + '</option>';
+             }
+
+             // Escenario
+             //var currentEscenario = $("select#object_escenario").val()
+             var options = '';
+             for (var i = 0; i < j.escenario.length; i++) {
+               options += '<option value="' + j.escenario[i].optionValue + '">' + j.escenario[i].optionDisplay + '</option>';
+             }
+             $("select#object_escenario").html(options);
+             //$("select#object_escenario").val(currentEscenario);
+         });
+
+    }
+    }
+
+  function isEmpty(obj) {
+    for(var prop in obj) {
+      if(obj.hasOwnProperty(prop))
+        return false;
+    }
+    return true;
+  }
+
+  // correr al cargar
+    $('#object_encuesta').change();
+   
+   $("form").submit(function(){
+    $('select#object_status').attr("disabled",false);
+    $('select#object_status').val('1');
+    $('input#object_modelo').attr("disabled",false);
+
+    $('select#object_funcional_rol').attr("hidden",false);
+    $('select#object_funcional_rol').attr("disabled",false);
+    $('select#object_funcional_rol').val('3');
+  });    
+});
+
+</script>
+
+<div id="crudBlank" class="${type.name}">
+  
+  <h2 id="crudBlankTitle">&{type.modelName}</h2>
+  <div class="objectForm">
+  #{form action:@create(), enctype:'multipart/form-data'}
+    #{crud.form  fields:['encuesta', 'modelo', 'periodo', 'escenario', 'ceco', 'usuario', 'status', 'funcional_rol']}
+    
+    #{crud.custom  'modelo'}
+     <label for="object_modelo">
+          Modelo:
+    </label>        
+    <input id="object_modelo" readonly="readonly" class="gray" type="text" disabled="true" name="object.modelo" value="" size="50">
+      <span class="crudHelp">
+        Requerido.
+      </span>
+    #{/crud.custom }
+    
+    #{crud.custom  'ceco'}
+     <label for="object_ceco">
+      CECO/Orden:
+     </label>
+     <select id="object_ceco" name="object.ceco">
+     </select>
+     #{ifError 'object.ceco'}
+      <span class="error">Requerido</span>
+     #{/ifError}
+       <span class="crudHelp">
+        Requerido.
+       </span>
+    #{/crud.custom }
+    
+    #{crud.custom  'periodo'}
+     <label for="object_periodo">
+          Periodo:
+        </label>
+        <select id="object_periodo" name="object.periodo">
+          </select>
+             #{ifError 'object.periodo'}
+             <span class="error">Requerido</span>
+             #{/ifError}
+            <span class="crudHelp">
+              Requerido.
+            </span>
+    #{/crud.custom }
+    
+
+    #{crud.custom  'escenario'}
+     <label for="object_escenario">
+          Escenario:
+        </label>
+        <select id="object_escenario" name="object.escenario">
+          </select>
+             #{ifError 'object.escenario'} 
+             <span class="error">Requerido</span>
+             #{/ifError}
+               <span class="crudHelp">
+                   Requerido.
+                 </span>
+    #{/crud.custom }
+    
+    
+    #{crud.custom  'usuario'}
+     <label for="object_usuario">
+          Usuario Registrador:
+        </label>
+        <select id="object_usuario" name="object.usuario.id">
+          #{list items:usuarios, as:'elem'}
+              <option value="${elem.id}">${elem}</option>
+          #{/list} 
+            </select>
+             #{ifError 'object.usuario'} 
+             <span class="error">Requerido</span>
+             #{/ifError}
+               <span class="crudHelp">
+                   Requerido.
+                 </span>
+    #{/crud.custom }
+  
+  #{/crud.form}
+    <p class="crudButtons">
+      <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+      <input type="submit" name="_saveAndAddAnother" value="&{'crud.saveAndAddAnother', type.modelName}" />
+    </p>
+  #{/form}
+  </div>
+
+</div>

@@ -1,0 +1,117 @@
+#{extends 'Application/generador_layout.html' /}
+
+<script type="text/javascript">
+</script>
+
+<h2>Actualizados</h2>
+<div id="crudListTable1"> 
+<table> 
+<thead> 
+	<tr> 
+		<th width="30%">			
+				Denom. Centro de Costos			 
+		</th>
+		<th width="30%"> 
+				Codigo Centro de Costos
+		<th width="30%">			 
+				Estatus			 
+		</th>
+		<th width="10%">		
+		</th>
+	</tr> 
+</thead> 
+   #{list items:actualizados, as:'encuesta'}
+	<tr class="${encuesta_parity}"> 
+		<td> 
+    	     ${encuesta.nombre}
+    	</td>		
+	    <td> 
+    		${encuesta.codigo}
+    		 
+		</td>
+	    <td> 
+    		<b>${encuesta.status}</b>
+		</td>
+		<td class="crudNew">
+			<a href="@{Application.llenarEncuesta(encuesta?.id)}">Llenar</a>
+		</td>
+	</tr>
+   #{/list} 
+	</table>
+</div>
+
+<br />
+
+<h2>No Actualizados</h2>
+<div id="crudListTable1"> 
+<table> 
+<thead> 
+	<tr> 
+		<th width="30%">			
+				Denom. Centro de Costos			 
+		</th>
+		<th width="30%"> 
+				Codigo Centro de Costos
+		<th width="30%">			 
+				Estatus			 
+		</th>
+		<th width="10%">		
+		</th>
+	</tr> 
+</thead> 
+   #{list items:noactualizados, as:'encuesta'}
+	<tr class="${encuesta_parity}"> 
+		<td> 
+    	     ${encuesta.nombre}
+    	</td>		
+	    <td> 
+    		${encuesta.codigo}
+		</td>
+	    <td> 
+    		<b>${encuesta.status}</b>
+		</td>
+		<td class="crudNew">
+			<a href="@{Application.llenarEncuesta(encuesta?.id)}">Llenar</a>
+		</td>
+	</tr>
+   #{/list} 
+	</table>
+</div>
+
+
+<h2>Mensajes</h2>
+<div id="crudListTable1"> 
+<table> 
+<thead> 
+	<tr> 
+		<th width="30%">			
+			Asunto			 
+		</th>
+		<th width="30%"> 
+		    Origen
+		<th width="30%">			 
+			Fecha		 
+		</th>
+		<th width="10%">		
+		</th>
+	</tr> 
+</thead> 
+   #{list items:mensajes, as:'msj'}
+	<tr class="${encuesta_parity}"> 
+		<td> 
+    	     ${msj.asunto}
+    	</td>		
+	    <td> 
+    		${encuesta.origen}
+		</td>
+	    <td> 
+    		<b>${encuesta.fecha}</b>
+		</td>
+		<td class="crudNew">
+			<a href="">Ver</a>
+		</td>
+	</tr>
+   #{/list} 
+	</table>
+</div>
+  

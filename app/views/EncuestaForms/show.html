@@ -1,0 +1,91 @@
+#{extends 'EncuestaForms/layout.html' /}
+
+<script type="text/javascript">
+$(document).ready( function() {
+
+	$("#object_nombre").attr("disabled",true);
+
+    $('#object_encuesta').change(function() {
+
+    	var nombreConductor =  $("select#object_nombreConductor").val();
+
+        if($('#object_encuesta').val() != ''){
+
+        	$.getJSON('/SASWeb/gen/encuestadata/'+$('#object_encuesta').val(), function(data) {
+		     $('#object_modelo').val(data.modelo);
+             $('#object_tipo').val(data.tipo);
+
+             // NombreConductor
+             var options = '';
+             for (var i = 0; i < data.conductor.length; i++) {
+               options += '<option value="' + data.conductor[i].optionValue + '">' + data.conductor[i].optionDisplay + '</option>';
+             }
+             $("select#object_nombreConductor").html(options).val(nombreConductor);
+
+	    });
+
+		}else{
+     		$('#object_modelo').val('');
+			$('#object_tipo').val('');
+	   }
+  	 });
+
+    $('#object_encuesta').change();
+
+});
+</script>
+
+<div id="crudShow" class="${type.name}">
+
+	<h2 id="crudShowTitle">&{'crud.show.title', 'Pregunta'}</h2>
+
+	<div class="objectForm">
+	#{form action:@save(object.id), enctype:'multipart/form-data'}
+		#{crud.form  fields:['nombre', 'encuesta', 'unidadMedida', 'modelo', 'tipo']}
+
+		#{crud.custom  'modelo'}
+		 <label for="object_modelo">
+					Modelo:
+		</label>
+		<input id="object_modelo" disabled="disabled" class="" type="text" name="object.modelo" value="" size="50">
+		#{/crud.custom }
+
+		#{crud.custom 'tipo'}
+		 <label for="object_tipo">
+					Tipo de Cuestionario:
+		</label>
+		<input id="object_tipo" disabled="disabled" class="" type="text" name="object.tipo" value="" size="50">
+		#{/crud.custom }
+
+		#{crud.custom  'nombreConductor'}
+		 <label for="object_nombreConductor">
+					Nombre Conductor:
+				</label>
+				<select id="object_nombreConductor" name="object.nombreConductor">
+				<option value="${object.nombreConductor}" selected="selected" >${object.nombreConductor}</option>
+			    </select>
+		        #{ifError 'object.nombreConductor'}
+		              <span class="error">Requerido</span>
+		         #{/ifError}
+		           <span class="crudHelp">
+      		         Requerido.
+      		       </span>
+		#{/crud.custom }
+
+
+	    #{/crud.form}
+        <p class="crudButtons">
+			<input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+			<input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+		</p>
+	#{/form}
+	</div>
+
+	#{form @delete(object.id)}
+
+		<p class="crudDelete">
+		<input type="submit" value="&{'crud.delete', type.modelName}" />
+		</p>
+	#{/form}
+
+</div>

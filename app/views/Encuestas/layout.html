@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${lang}" lang="${lang}">
+    <head>
+        <title>${get('title') ?: 'Sistema Web ETL - CANTV'} </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.ico'}">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/crud.css'}" />
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/javascripts/jquery.alerts.css'}" />
+        <script src="@{'/public/javascripts/jquery-1.4.min.js'}" type="text/javascript" charset="utf-8"></script>
+        <script src="@{'/public/javascripts/jquery.alerts.js'}" type="text/javascript" charset="utf-8"></script>
+    </head>
+	<body id="crud">
+
+		<div id="crudHeader">
+			<a href="/SASWeb/application/main"><img src="@{'/public/images/logo.gif'}" alt="Logo"></a>
+			<h2 class="red">&{'generador.title'}</h2>
+			<h3 class="red">&{'generador.subtitle'}</h3>
+		     <nobr class ="logout">
+			<span><a id=":r4" href="/SASWeb/" >Inicio</a></span>  | <span><a id=":r4" href="@{'/public/ayuda/ModuloGenerador.htm'}" target="_blank">Ayuda</a></span>  | <a target="_top" href="/SASWeb/logout" id=":r7" >&{'application.logout'}</a>
+			</nobr>
+		</div>
+
+		<div class="list-menu">
+			<ul id="list-nav">
+			<li><a href="/SASWeb/admin/">Principal</a></li>
+			<li><a href="/SASWeb/cargaInicial">Carga Inicial</a></li>
+			<li><a href="/SASWeb/encuestas/list">Cuestionario</a></li>
+			<li><a href="/SASWeb/encuestaforms/list">Preguntas</a></li>
+			<li><a href="/SASWeb/permisoencuestas/list">Asignar Cuestionario</a></li>
+
+			<li class="last"><a href="/SASWeb/configuraciones/show?id=1">Configuraci&oacute;n</a></li>
+			</ul>
+		</div>
+
+      	<div style="float: right;">
+ 		<b>Usuario: ${session.user.raw()}</b>
+		</div>
+
+
+	#{if request.actionMethod != 'index'}
+			<div id="crudBreadcrumb">
+				#{crud.navigation /}
+			</div>
+		#{/if}
+
+		#{if flash.success}
+			<div class="crudFlash flashSuccess">
+				${flash.success}
+			</div>
+		#{/if}
+		#{if flash.error || error}
+			<div class="crudFlash flashError">
+				${error ?: flash.error}
+			</div>
+		#{/if}
+
+		<div id="crudContent">
+			#{doLayout /}
+		</div>
+
+		<div id="crudFooter">
+			Compañia Anónima Nacional Teléfonos de Venezuela. RIF: J-00124134-5.- Todos los derechos reservados
+		</div>
+
+	</body>
+</html>

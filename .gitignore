@@ -1,0 +1,4 @@
+tmp/
+logs/
+conf/application.conf
+transformaciones/carga_inicial/*.xls

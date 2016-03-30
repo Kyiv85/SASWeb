@@ -1,0 +1,125 @@
+#{extends 'Encuestado/encuestado_layout.html' /}
+
+<script type="text/javascript">
+
+
+	$(function(){
+		var valcol = $('#td_status b').html();
+		if (valcol == 'Validado por funcional') {
+			$('.btnEdit').attr("hidden",true);
+		}
+		else{
+			$('.btnEdit').attr("hidden",false);
+		};
+		
+	});
+
+</script>
+
+<h2>Actualizados</h2>
+<div id="crudListTable1"> 
+<table id="actTable"> 
+<thead> 
+	<tr> 
+		<th width="30%">			
+				Denominaci&oacute;n CeCo			 
+		</th>
+		<th width="10%"> 
+				C&oacute;digo
+		</th>
+		<th width="15%">
+				Periodo
+		</th>
+		<th width="15%">
+				Estatus
+		</th>				
+		<th width="20%">
+				Observaciones
+		</th>				
+		<th width="10%">		
+		</th>
+		</th>				
+		<th width="10%">		
+		</th>
+	</tr> 
+</thead> 
+   #{list items:actualizados, as:'encuesta'}
+      
+	<tr class="${encuesta_parity}"> 
+		<td> 
+		${encuesta.getCECONombre()}
+    	</td>		
+	    <td> 
+    		${encuesta.ceco}
+    	</td>
+    	<td> 
+    		${encuesta.periodo}
+    	</td>
+    	<td id="td_status"> 
+    		<b>${encuesta.status}</b>
+    	</td>
+	    <td> 
+    		${encuesta.observaciones}
+    	</td>
+	  	<td class="crudNew">
+			<a class="btnRev" href="@{Encuestado.viewEncuestaSummary(encuesta?.id)}">Revisar</a>
+		</td>
+		 <td class="crudNew">
+			<a class="btnEdit" href="@{Encuestado.llenarEncuesta(encuesta?.id)}">Editar</a>
+		 </td>
+	</tr>
+   #{/list} 
+	</table>
+</div>
+
+<br />
+
+<h2>No Actualizados</h2>
+<div id="crudListTable1"> 
+<table> 
+<thead> 
+	<tr> 
+		<th width="30%">			
+				Denominaci&oacute;n CeCo			 
+		</th>
+		<th width="10%"> 
+				C&oacute;digo
+		</th>
+		<th width="15%">
+				Periodo
+		</th>		
+		<th width="15%">
+				Estatus
+		</th>			
+		<th width="20%">
+				Observaciones
+		</th>				
+		<th width="10%">		
+		</th>
+	</tr> 
+</thead> 
+   #{list items:noactualizados, as:'encuesta'}
+	<tr class="${encuesta_parity}"> 
+		<td> 
+    	${encuesta.getCECONombre()}
+    	 
+    	</td>		
+	    <td> 
+    		${encuesta.ceco}
+    	</td>
+    	<td> 
+    		${encuesta.periodo}
+    	</td>
+    	<td> 
+    		<b>${encuesta.status}<b>
+    	</td>
+    	<td> 
+    		<b>${encuesta.observaciones}<b>
+    	</td>
+	    <td class="crudNew">
+			<a href="@{Encuestado.llenarEncuesta(encuesta?.id)}">Llenar</a>
+		</td>
+	</tr>
+   #{/list} 
+	</table>
+</div>

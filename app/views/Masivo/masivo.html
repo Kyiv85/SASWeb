@@ -1,0 +1,27 @@
+#{extends 'PermisoEncuestas/layout.html' /}
+
+
+    <div class="list-menu">
+
+        <p> </p>
+<!--
+        <form action="@{Masivo.cargaCsv()}" method="GET">
+            <input type="file" name="arch"/>
+            <input type="submit" value="Say hello!" />
+        </form>-->
+
+        #{form @cargaCsv(), enctype:'multipart/form-data'}
+        <input type="file" id="csv" name="arch" />
+        <input type="submit" value="Enviar..." />
+        #{/}
+
+        <!--    <a href="@routes.Masivo.index">ir</a> -->
+        <div style="height:400px">
+            <p style="height:100%; display:block;"> </p>
+        </div>
+
+
+
+     </tr>
+
+    </div>

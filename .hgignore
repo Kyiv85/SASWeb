@@ -1,0 +1,14 @@
+precompiled$
+syntax: regexp
+^gwt-public/adminsas$
+syntax: regexp
+^extras$
+syntax: regexp
+^tmp$
+syntax: regexp
+^eclipse$
+syntax: regexp
+^db$
+syntax: glob
+.classpath
+.project

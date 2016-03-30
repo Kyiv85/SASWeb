@@ -1,0 +1,73 @@
+#{extends 'Application/funcional_layout.html' /}
+
+<div id="crudShow" class="">  
+<h2>Resumen</h2>
+  
+<div class="objectForm">
+
+  <h4 id="crudShowTitle">Nombre: ${nombreActividad}</h4>
+  <h4 id="crudShowTitle">Periodo: ${periodo}</h4> 
+	  
+#{form action:@Application.cambiarStatusEstadistico(dimFuente), id:'encuestaForm', enctype:'multipart/form-data'}
+<div id="crudListTable1"> 
+<table> 
+ <thead> 
+  <tr>
+	<th>			
+		Conductor			 
+	</th>
+	<th>			
+		Clientes			 
+	</th>
+	<th>			
+		Productos Comerciales			 
+	</th>
+	<th>			
+		Unidad de medida			 
+	</th>	
+  </tr> 
+ </thead>
+ <tbody>
+ #{list items:list, as:'item'} 
+  <tr class=""> 
+	<td>			
+		${item._NombreConductor}			 
+	</td>
+	<td>
+		${item.DestinoDimMemberRef1}
+	</td>
+	<td>
+		${item.DestinoDimMemberRef2}
+	</td>
+	<td>
+	    ${item.DQF}
+	</td>
+  </tr>	
+ #{/list}
+  <tr class="">
+  	<td>
+		<b>&nbsp;</b>			
+	</td>
+	<td>
+		<b>&nbsp;</b>			
+	</td> 
+	<td>
+		<b>Total</b>			
+	</td>
+	<td>
+		<b>${dqfSum}</b>	
+	</td>
+  </tr>
+ </tbody>	
+</table>
+
+    <p class="crudButtons">
+			<input id="devolver" type="submit" name="_reject" value="Volver a Estadisticos">
+			
+   </p>
+	
+</div>
+#{/form} 
+</div>
+</div>
+	

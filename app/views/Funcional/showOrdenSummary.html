@@ -1,0 +1,72 @@
+#{extends 'Application/funcional_layout.html' /}
+
+<script type="text/javascript">
+$(document).ready( function() {
+	$("#devolver").click( function(e) {
+		e.preventDefault();
+
+		jPrompt('Por favor, Introduzca las observaciones pertinentes:', '', 'Observaciones', function(r) {
+			if (r){
+				$('textarea[name="observaciones"]').val(r);
+				$('#devolverEnc').click();
+			}
+		});
+	});
+});
+</script>
+
+<div id="crudShow" class="">  
+<h2>Resumen</h2>
+  
+<div class="objectForm">
+  <h5 id="crudShowTitle">Centro de Responsabilidad: ${perm.ceco} - ${perm.getCECONombre()}</h5>
+  <h5 id="crudShowTitle">Periodo: ${perm.periodo}</h5> 
+	  
+#{form action:@cambiarStatusOrden(perm?.id), id:'encuestaForm', enctype:'multipart/form-data'}
+<div id="crudListTable1"> 
+<table> 
+<thead> 
+  <tr>
+   	<th>			
+		Actividades			 
+	</th>
+	  #{list items:encuestas, as:'encuesta'}
+		<th>			
+		${encuesta.unidadMedida}			 
+		</th>
+	  #{/list}
+	</tr> 
+</thead>
+  #{list items:list, as:'item'} 
+	<tr class=""> 
+		<td>			
+		 ${item.Nombre_Actividad}			 
+		</td>
+		#{list items:item.DQF, as:'listDQF'}
+		      	<td>
+		       	  ${listDQF}
+		       	</td>
+	    #{/list}
+	</tr>	
+  #{/list}
+  
+   <tr class=""> 
+		<td>
+		<b> Total</b>			
+		</td>
+		#{list items:suma, as:'sum'}
+		 	<td>	<b> ${sum} </b>	</td>
+	 #{/list}
+	</tr>	
+	</table>
+	
+	<p class="crudButtons">
+	   <input type="submit" value="Enviar a Funcional" class="navigation_button">
+   </p>
+   
+</div>
+#{/form}
+
+</div>
+</div>
+	

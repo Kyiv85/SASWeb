@@ -1,0 +1,64 @@
+#{extends 'Application/encuestado_layout.html' /}
+
+
+<div id="crudShow" class=""> 
+  <h2 id="crudShowTitle">Mostrar Encuesta: ${encuestaPaso.encuestaNombre} </h2>
+  <b id="crudShowTitle">Centro de Responsabilidad:</b> ${encuestaPaso.denominacionCeco} - ${encuestaPaso.codigoCeco}<br>
+  <b id="crudShowTitle">Modelo:</b> ${encuestaPaso.modelo}
+  <b id="crudShowTitle">Periodo:</b> ${encuestaPaso.periodo}
+  <b id="crudShowTitle">Escenario:</b> ${encuestaPaso.escenario}
+    <div class="objectForm"> 
+	
+	
+
+    	 
+<div id="crudListTable1"> 
+<table> 
+<thead> 
+	<tr> 
+		<th width="30%">			
+				Nombre Actividad			 
+		</th>
+		 #{list items:tituloAsignacionTemporal, as:'titulo'}
+		<th width="30%"> 
+				${titulo.titulo}
+		</th>
+		#{/list} 
+	</tr> 
+</thead> 
+   #{list items:asignacionTemporal, as:'at'}
+	<tr class="${at_parity}"> 
+		<td> 
+    	     ${at.fila}
+    	</td>	
+    	
+		#{list items:tituloAsignacionTemporal, as:'titulo'}
+		<td width="30%"> 
+			%{
+				
+				String tituloAT = titulo.titulo ;
+				tituloAT.replaceAll(' ', '') ;
+				tituloAT.replaceAll('\n', '') ;
+				tituloAT.replaceAll('\r', '') ;
+				tituloAT.replaceAll('\t', '') ;
+				
+				
+				
+				if (tituloAT.equalsIgnoreCase(at.titulo)){
+					out.println(at.DQF) ; 
+				} 
+				
+				
+			}%
+		</td>
+		#{/list}     	
+  		
+
+	</tr>
+   #{/list} 
+	</table>
+</div>
+    	 
+
+
+	

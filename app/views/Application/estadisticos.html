@@ -1,0 +1,79 @@
+#{extends 'Application/funcional_layout.html' /}
+
+<h2 id="crudShowTitle">Estadisticos</h2>
+
+<h2>Revisadas</h2>
+<div id="crudListTable1">
+<table>
+<thead>
+	<tr>
+		<th width="50%">
+				Nombre
+		</th>
+		<th width="20%">
+				Periodo
+		</th>
+		<th width="20%">
+				Estatus
+		</th>
+		<th width="10%">
+		</th>
+	</tr>
+</thead>
+   #{list items:act, as:'estadistico'}
+	<tr class="${encuesta_parity}">
+		<td>
+	    	${estadistico.Nombre_Actividad}
+    	</td>
+	    <td>
+    		${estadistico.periodo}
+    	</td>
+    	<td>
+    		<b>Validado</b>
+		</td>
+	    <td class="crudNew">
+			<a href="/SASWeb/estadisticos/ver/${estadistico?.region}/${estadistico?.proceso}/${estadistico?.unidad}/${estadistico?.segmento}">Ver</a>
+		</td>
+	</tr>
+   #{/list}
+</table>
+</div>
+
+<br />
+
+<h2>Por Revisar</h2>
+<div id="crudListTable1">
+<table>
+<thead>
+	<tr>
+		<th width="50%">
+				Nombre
+		</th>
+		<th width="20%">
+				Periodo
+		</th>
+		<th width="20%">
+				Estatus
+		</th>
+		<th width="10%">
+		</th>
+	</tr>
+</thead>
+   #{list items:noact, as:'estadistico'}
+	<tr class="${encuesta_parity}">
+		<td>
+	    	${estadistico.Nombre_Actividad}
+    	</td>
+	    <td>
+    		${estadistico.periodo}
+    	</td>
+    	<td>
+    		<b>Sin validar</b>
+		</td>
+	    <td class="crudNew">
+			<a href="/SASWeb/estadisticos/llenar/${estadistico?.region}/${estadistico?.proceso}/${estadistico?.unidad}/${estadistico?.segmento}">Llenar</a>
+		</td>
+	</tr>
+   #{/list}
+</table>
+</div>

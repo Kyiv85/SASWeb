@@ -1,0 +1,57 @@
+#{extends 'Seguridad/layout.html' /}
+
+<div id="crudShow" class="${type.name}">
+	
+	<h2 id="crudShowTitle">&{'crud.show.title', 'Usuario'}</h2>
+	
+	<div class="objectForm">
+	#{form action:@save(object.id), enctype:'multipart/form-data'}
+		#{crud.form  fields:['activo','nombre', 'usuario','contrasena','rol']}
+		
+		  #{crud.custom 'nombre'}
+			<label for="object_nombre">
+			Nombre
+			</label>
+		    <b>${object.nombre}</b>
+		    #{ifError 'object.nombre'}
+		              <span class="error">Requerido</span>
+		         #{/ifError}
+		    <span class="crudHelp">
+      			Requerido.
+      	     </span>
+      #{/crud.custom}
+	  #{crud.custom 'usuario'}
+			<label for="object_usuario">
+			Usuario
+			</label>
+		    <b>${object.usuario}</b>
+		    #{ifError 'object.usuario'}
+		                <span class="error">Requerido</span>
+		    #{/ifError}
+		    <span class="crudHelp">
+      			Requerido.
+      	     </span>
+      #{/crud.custom}		 
+	  #{crud.custom 'contrasena'}
+			<label for="object_contrasena">
+			Contraseña
+			</label>
+		    <input id="object_contrasena" class="" disabled='disabled' type="password" name="object.contrasena" value="${object.contrasena}" size="50">
+			
+		   #{ifError 'object.contrasena'}
+		           <span class="error">Requerido</span>
+		   #{/ifError}
+		    <span class="crudHelp">
+      			Requerido.
+      	     </span>
+      #{/crud.custom}		 
+	  #{/crud.form}
+        
+		<p class="crudButtons">
+			<input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+			<input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+		</p>
+	#{/form}
+	</div>
+	
+</div>

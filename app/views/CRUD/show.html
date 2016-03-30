@@ -1,0 +1,88 @@
+#{extends 'CRUD/layout.html' /}
+<script type="text/javascript">
+
+$(document).ready( function() {
+
+	$(".crudDelete :submit").click( function(e) {
+		e.preventDefault();
+		var form = $('input[type=submit]').closest("form");
+
+		jConfirm('Desea borrar el objeto?', 'Confirmar', function(r) {
+			if (r){
+				form.submit();
+			}
+		});
+	});
+
+//Autocomplete para Ruta plantilla
+
+
+   $("#object_rutaPlantilla").attr("disabled","disabled");
+
+$.getJSON("/SASWeb/admin/GetFolderList/", function(result) {
+
+    var optionsValues = "<select id='dirSelector'>";
+    optionsValues += '<option value="(nada)" selected="selected">(nada)</option>';
+
+    $.each(result, function(index, item) {
+
+            optionsValues += '<option value="' + item.optionValue + '">' + item.optionDisplay + '</option>';
+    });
+    optionsValues += '</select>';
+
+    var parent = $('#object_rutaPlantilla').closest('div');
+    var currentElem = $('#object_rutaPlantilla');
+    var currentValue = currentElem.val();
+
+    // Escondo el elemento actual
+    currentElem.hide();
+    $(optionsValues).insertAfter(currentElem);
+    //parent.append(optionsValues);
+
+    if ( currentValue != ""){
+    	$("#dirSelector").val(currentValue);
+    }
+
+    $("#dirSelector").change(function(){
+
+    	 var str = "";
+    	$("#dirSelector option:selected").each(function () {
+              str = $(this).text();
+            });
+
+        if(str == "(nada)"){
+        	 $("#object_rutaPlantilla").val('');
+        }else{
+        	 $("#object_rutaPlantilla").val(str);
+            }
+
+        $("#object_rutaPlantilla").removeAttr("disabled");
+    });
+
+});
+
+});
+
+</script>
+
+<div id="crudShow" class="${type.name}">
+
+	<h2 id="crudShowTitle">&{'crud.show.title', type.modelName}</h2>
+
+	<div class="objectForm">
+	#{form action:@save(object._key()), enctype:'multipart/form-data'}
+		#{crud.form /}
+		<p class="crudButtons">
+			<input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+			<input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+		</p>
+	#{/form}
+	</div>
+
+	#{form @delete(object._key())}
+
+		<p class="crudDelete">
+		<input type="submit" value="&{'crud.delete', type.modelName}" />
+		</p>
+	#{/form}
+</div>

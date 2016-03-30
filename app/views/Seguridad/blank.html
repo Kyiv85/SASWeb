@@ -1,0 +1,66 @@
+#{extends 'Seguridad/layout.html' /}
+<script type="text/javascript">
+
+$(document).ready( function() {
+	//Autocomplete para Ruta plantilla
+
+	$.getJSON("/SASWeb/admin/GetFolderList/", function(result) {
+
+	    var optionsValues = "<select id='dirSelector'>";
+	    optionsValues += '<option value="(nada)" selected="selected">(nada)</option>';
+
+	    $.each(result, function(index, item) {
+	    	    optionsValues += '<option value="' + item.optionValue + '">' + item.optionDisplay + '</option>';
+	    });
+	    optionsValues += '</select>';
+
+	    var parent = $('#object_rutaPlantilla').closest('div');
+	    var currentElem = $('#object_rutaPlantilla');
+	    var currentValue = currentElem.val();
+
+	    // Escondo el elemento actual
+	    currentElem.hide();
+	    $(optionsValues).insertAfter(currentElem);
+	    //parent.append(optionsValues);
+
+	    if ( currentValue != ""){
+	    	$("#dirSelector").val(currentValue);
+	    }
+
+	    $("#dirSelector").change(function(){
+
+	    	 var str = "";
+	    	$("#dirSelector option:selected").each(function () {
+	              str = $(this).text();
+	            });
+
+	        if(str == "(nada)"){
+	        	 $("#object_rutaPlantilla").val('');
+	        }else{
+	        	 $("#object_rutaPlantilla").val(str);
+	            }
+
+
+	    });
+
+	});
+
+});
+</script>
+
+<div id="crudBlank" class="${type.name}">
+
+	<h2 id="crudBlankTitle">&{'crud.blank.title', type.modelName}</h2>
+
+	<div class="objectForm">
+	#{form action:@create(), enctype:'multipart/form-data'}
+		#{crud.form /}
+		<p class="crudButtons">
+			<input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+			<input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+			<input type="submit" name="_saveAndAddAnother" value="&{'crud.saveAndAddAnother', type.modelName}" />
+		</p>
+	#{/form}
+	</div>
+
+</div>

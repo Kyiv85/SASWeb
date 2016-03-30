@@ -1,0 +1,103 @@
+#{extends 'Application/funcional_layout.html' /}
+
+<h2 id="crudShowTitle">Cuestionarios</h2>
+
+<h2>Revisadas</h2>
+<div id="crudListTable1">
+<table>
+<thead>
+	<tr>
+		<th width="30%">
+				Denominaci&oacute;n CeCo
+		</th>
+		<th width="20%">
+				C&oacute;digo
+		</th>
+		<th width="20%">
+				Periodo
+		</th>
+		<th width="20%">
+				Estatus
+		</th>
+		<th width="5%">
+		</th>
+		</th>
+		<th width="5%">
+		</th>
+	</tr>
+</thead>
+   #{list items:actualizados, as:'encuesta'}
+
+	<tr class="${encuesta_parity}">
+		<td>
+		${encuesta.getCECONombre()}
+    	</td>
+	    <td>
+    		${encuesta.ceco}
+    	</td>
+    	<td>
+    		${encuesta.periodo}
+    	</td>
+    	<td>
+    		<b>${encuesta.status}<b>
+    	</td>
+
+	  <td class="crudNew">
+			<a href="/SASWeb/funcional/view/${encuesta?.id}">Revisar</a>
+		</td>
+	</tr>
+
+   #{/list}
+	</table>
+</div>
+
+<br />
+
+<h2>Por Revisar</h2>
+<div id="crudListTable1">
+<table>
+<thead>
+	<tr>
+		<th width="30%">
+				Denominaci&oacute;n CeCo
+		</th>
+		<th width="20%">
+				C&oacute;digo
+		</th>
+		<th width="20%">
+				Periodo
+		</th>
+		<th width="20%">
+				Estatus
+		</th>
+		<th width="5%">
+		</th>
+		</th>
+		<th width="5%">
+		</th>
+		
+	</tr>
+</thead>
+   #{list items:noactualizados, as:'encuesta'}
+	<tr class="${encuesta_parity}">
+		<td>
+    	${encuesta.getCECONombre()}
+    	</td>
+	    <td>
+    		${encuesta.ceco}
+    	</td>
+    	<td>
+    		${encuesta.periodo}
+    	</td>
+    	<td>
+    		<b>${encuesta.status}<b>
+    	</td>
+	    <td class="crudNew">
+				<a href="/SASWeb/funcional/view/${encuesta?.id}">Revisar</a>
+		<td class="crudNew">
+			<a href="@{Encuestado.llenarEncuesta(encuesta?.id)}">Editar</a>
+		</td>
+	</tr>
+   #{/list}
+	</table>
+</div>

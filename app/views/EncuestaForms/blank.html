@@ -1,0 +1,131 @@
+#{extends 'Encuestas/layout.html' /}
+
+<script type="text/javascript">
+$(document).ready( function() {
+$("select#object_tipoValor").val(1);
+$("select#object_tipoValor").attr("disabled",true);
+
+$('#object_encuesta').change(function() {
+
+	if($('#object_encuesta').val() != ''){
+
+	$.getJSON('/SASWeb/gen/encuestadata/'+$('#object_encuesta').val(), function(data) {
+		$('#object_modelo').val(data.modelo);
+	    $('#object_tipo').val(data.tipo);
+	    pos = data.posicion;
+	    pos++;
+	    $('#object_posicion').val(pos);
+
+	    var currentConductor = $("select#object_nombreConductor").val();
+
+	    // NombreConductor
+        var options = '';
+        
+        for (var i = 0; i < data.conductor.length; i++) {
+        	console.log(data.conductor[i].optionValue);
+        	options += '<option value="' + data.conductor[i].optionValue + '">' + data.conductor[i].optionValue + '</option>';		
+        };
+
+        $("select#object_nombreConductor").html(options);
+        $("select#object_nombreConductor").val(currentConductor);
+        
+        $('input#object_nombre').attr("disabled",false);
+        $('input#object_nombre').val($("select#object_nombreConductor").val());
+        $('input#object_nombre').attr("disabled",true);
+
+        $("select#object_nombreConductor").change(function(){
+        	$('input#object_nombre').attr("disabled",false);
+        	$('input#object_nombre').val($(this).val());
+        	$('input#object_nombre').attr("disabled",true);
+        });
+	});
+
+	}else{
+		$('#object_modelo').val('');
+		$('#object_tipo').val('');
+		$('#object_nombre').val('');
+		$('#object_posicion').val('');
+	}
+
+
+
+   });
+
+   // correr al cargar
+   $('#object_encuesta').change();
+
+   $("form").submit(function(){
+		$('#object_nombre').attr("disabled",false);
+		$('#object_posicion').attr("disabled",false);
+		$('#object_tipoValor').attr("disabled",false);
+		$("select#object_tipoValor").attr("disabled",false);		
+	});
+});
+</script>
+
+
+<div id="crudBlank" class="${type.name}">
+
+	<h2 id="crudBlankTitle">&{'crud.blank.title', type.modelName}</h2>
+
+	<div class="objectForm">
+	#{form action:@create(), enctype:'multipart/form-data'}
+		#{crud.form  fields:['encuesta', 'nombre', 'unidadMedida', 'tipoValor', 'posicion', 'modelo', 'tipo', 'nombreConductor']}
+		#{crud.custom  'nombre'}
+			<label for="object_nombre">
+				Nombre:
+			</label>
+			<input id="object_nombre" disabled="true" type="text" name="object.nombre"size="50">
+		#{/crud.custom }
+
+		#{crud.custom  'posicion'}
+			<label for="object_posicion">
+				Posición de pregunta:
+			</label>
+			<input id="object_posicion" disabled="true" type="text" name="object.posicion" size="50">
+		#{/crud.custom }
+		
+		#{crud.custom  'modelo'}
+		 <label for="object_modelo">
+					Modelo:
+		</label>
+		<input id="object_modelo" disabled="disabled" class="" type="text" name="object.modelo" value="" size="50">
+		#{/crud.custom }
+
+		#{crud.custom  'tipo'}
+		 <label for="object_tipo">
+		   Tipo de Cuestionario:
+		</label>
+		<input id="object_tipo" disabled="disabled" class="" type="text" name="object.tipo" value="" size="50">
+		#{/crud.custom }
+
+		#{crud.custom  'nombreConductor'}
+			<label for="object_nombreConductor">
+				Nombre Conductor:
+			</label>
+			<select id="object_nombreConductor" name="object.nombreConductor">
+		   		<option value="${object.nombreConductor}" selected="true">
+		   			${object.nombreConductor}
+		   		</option>
+			</select>
+		   	
+		   	#{ifError 'object.nombreConductor'}
+		        <span class="error">Requerido</span>
+           	#{/ifError}
+		    
+		    <span class="crudHelp">
+                Requerido.
+      		</span>
+    	#{/crud.custom }
+
+
+		#{/crud.form}
+		<p class="crudButtons">
+			<input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+			<input type="submit" name="_saveAndAddAnother" value="&{'crud.saveAndAddAnother', type.modelName}" />
+		</p>
+	#{/form}
+
+	</div>
+
+</div>

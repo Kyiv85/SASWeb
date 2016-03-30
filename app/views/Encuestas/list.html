@@ -1,0 +1,22 @@
+#{extends 'Encuestas/layout.html' /}
+
+<div id="crudList" class="${type.name}">
+	
+	<h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
+	<div id="crudListSearch">
+		#{crud.search /}
+	</div>
+
+	<div id="crudListTable">
+		#{crud.table  fields:['nombre', 'modelo', 'tipo' ]}
+        #{/crud.table}        
+	</div>
+	
+	<div id="crudListPagination">
+		#{crud.pagination /}
+	</div>
+	
+	<p id="crudListAdd">
+		<a href="@{blank()}">Agregar Cuestionario</a>
+	</p>
+</div>

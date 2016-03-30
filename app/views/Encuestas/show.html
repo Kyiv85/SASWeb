@@ -1,0 +1,44 @@
+#{extends 'Encuestas/layout.html' /}
+
+<div id="crudShow" class="${type.name}">
+	
+	<h2 id="crudShowTitle">Mostrar Cuestionario</h2>
+	
+	<div class="objectForm">
+		#{crud.form  fields:['nombre', 'modelo','tipo']}
+		
+		  #{crud.custom 'modelo'}
+		   <label for="object_modelo">
+					Modelo: 
+		  </label>
+		   <input id="object_modelo" disabled="disabled" class="" type="text" name="object.modelo" value="${object.modelo}" size="50">				
+		 #{/crud.custom }
+
+         #{crud.custom 'nombre'}
+		   <label for="object_nombre">
+					Nombre: 
+		  </label>
+		   <input id="object_nombre" disabled="disabled" class="" type="text" name="object.nombre" value="${object.nombre}" size="50">				
+		 #{/crud.custom }
+		
+		  #{crud.custom 'tipo'}
+		   <label for="object_tipo">
+					Tipo de Cuestionario: 
+		  </label>
+		   <input id="object_tipo" disabled="disabled" class="" type="text" name="object.tipo" value="${object.tipo}" size="50">				
+		 #{/crud.custom }
+						
+	    #{/crud.form}
+        
+		<p class="crudButtons">
+		</p>
+	</div>
+	
+	#{form @delete(object.id)}
+		
+		<p class="crudDelete">
+		<input type="submit" value="&{'crud.delete', "Cuestionario"}" />
+		</p>
+	#{/form}
+	
+</div>

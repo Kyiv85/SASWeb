@@ -1,0 +1,81 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                                      Application.index
+POST    /                                      Application.index
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                               staticDir:public
+GET     /gwt-public/                           staticDir:gwt-public
+
+GET     /app/adminsas/{<(admin.html)*>url}     Application.interceptAdmin
+GET     /app/                                  staticDir:gwt-public
+
+# Import Secure routes
+*       /                                      module:secure
+
+# CRUD Admin
+*      /admin                                  module:crud
+
+# Encuestado
+GET     /encuestado                          Encuestado.encuestado
+POST    /encuestado                          Encuestado.encuestado
+
+GET     /encuestado/llenar/{idPermiso}       Encuestado.llenarEncuesta
+GET     /encuestado/mostrar/{idPermiso}      Application.showEncuestaSummary
+GET     /encuestado/previo/{idPermiso}      Application.viewEncuestaSummary
+
+GET     /enc/encItem/{idPermiso}/{idPregunta}   Application.insertEncuestaRowData
+GET     /enc/encItemDelete/{idPermiso}/{idPregunta}   Application.deleteEncuestaRowData
+GET     /enc/encList/{idPermiso}/{idPregunta}   Application.listEncuestaRowData
+
+# Funcional
+GET     /funcional                           Application.funcional
+GET     /funcional/view/{idPermiso}          Application.viewEncuestaSummaryFuncional
+GET     /func/encList/{region}/{proceso}/{unidad}/{segmento}   Application.listEncuestaRowDataEstadistico
+
+GET     /encuestas                           Application.funcional
+
+GET 	/cargaInicial						 Application.cargaInicial
+
+# Estadistico
+GET     /estadisticos                        Application.estadisticos
+GET     /estadisticos/llenar/{region}/{proceso}/{unidad}/{segmento}     Application.llenarEstadistico
+GET     /estadisticos/ver/{region}/{proceso}/{unidad}/{segmento}     Application.viewEncuestaSummaryEstadistico
+
+#Ordenes
+GET     /ordenes                           	  Funcional.ordenes
+GET     /ord/encList/{idPermiso}/{idPregunta}   Funcional.listEncuestaRowData
+GET     /ord/encItemDelete/{idPermiso}/{idPregunta}   Funcional.deleteEncuestaRowData
+GET     /ord/encItem/{idPermiso}/{idPregunta} Funcional.insertEncuestaRowData
+
+# General
+GET     /changeRole/{id}                     Application.changeRole
+
+# JSON
+GET     /gen/encuestadata/{id}               Application.showEncuestaData
+GET     /gen/permisodata/{modelo}            Application.showPermisoData
+GET     /gen/userdata/{ceco}                 Application.showUserData
+
+# Data grid de Admin. Formato: JSON
+GET     /json/admin/data                       Administrador.getMultiDimensionData
+POST    /json/admin/data                       Administrador.manageMultiDimensionRequests
+GET     /json/admin/periodscenario             Administrador.getPeriodoEscenarioData
+GET     /json/admin/model                      Administrador.getModels
+GET     /json/admin/conductor                  Administrador.getConductores
+
+#Generador Masivo
+#GET     /permisoencuestas/list_masivo         Masivo.masivo
+POST     /masivo/masivo                         Masivo.masivo
+POST    /masivo/cargacsv                       Masivo.cargaCsv
+# Asignaciones
+GET     /json/admin/asignaciones               Administrador.getAsignacionesData
+POST    /json/admin/asignaciones               Administrador.manageAsignacionesRequests
+
+# Ayuda
+GET     /ayuda                               Application.ayuda
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}

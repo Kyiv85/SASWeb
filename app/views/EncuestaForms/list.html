@@ -1,0 +1,32 @@
+#{extends 'EncuestaForms/layout.html' /}
+
+<div id="crudList" class="${type.name}">
+	
+	<h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
+	<div id="crudListSearch">
+		#{crud.search /}
+	</div>
+
+	<div id="crudListTable">
+		#{crud.table  fields:['nombre', 'encuesta', 'modelo', 'tipo' , 'tipoValor', 'nombreConductor' ]}
+		
+		#{crud.custom 'modelo'}
+		     ${object.encuesta.modelo}
+		#{/crud.custom}
+        
+		#{crud.custom 'tipo'}
+		     ${object.encuesta.tipo}
+		#{/crud.custom}
+        
+        
+        #{/crud.table}        
+	</div>
+	
+	<div id="crudListPagination">
+		#{crud.pagination /}
+	</div>
+	
+	<p id="crudListAdd">
+		<a href="@{blank()}">&{'crud.add', type.modelName}</a>
+	</p>
+</div>

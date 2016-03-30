@@ -1,0 +1,103 @@
+#{extends 'Application/funcional_layout.html' /}
+<h2 id="crudShowTitle">Ordenes</h2>
+
+<h2>Actualizados</h2>
+<div id="crudListTable1"> 
+<table> 
+<thead> 
+	<tr> 
+		<th width="30%">			
+				Denominaci&oacute;n CeCo			 
+		</th>
+		<th width="10%"> 
+				C&oacute;digo
+		</th>
+		<th width="15%">
+				Periodo
+		</th>
+		<th width="15%">
+				Estatus
+		</th>				
+		<th width="20%">
+				Observaciones
+		</th>				
+		<th width="10%">		
+		</th>
+	</tr> 
+</thead> 
+   #{list items:actualizados, as:'encuesta'}
+      
+	<tr class="${encuesta_parity}"> 
+		<td> 
+		${encuesta.getCECONombre()}
+    	</td>		
+	    <td> 
+    		${encuesta.ceco}
+    	</td>
+    	<td> 
+    		${encuesta.periodo}
+    	</td>
+    	<td> 
+    		<b>${encuesta.status}<b>
+    	</td>
+	    <td> 
+    		<b>${encuesta.observaciones}<b>
+    	</td>
+	  <td class="crudNew">
+			<a href="@{Encuestado.viewEncuestaSummary(encuesta?.id)}">Revisar</a>
+	</tr>
+   #{/list} 
+	</table>
+</div>
+
+<br />
+
+<h2>No Actualizados</h2>
+<div id="crudListTable1"> 
+<table> 
+<thead> 
+	<tr> 
+		<th width="30%">			
+				Denominaci&oacute;n CeCo			 
+		</th>
+		<th width="10%"> 
+				C&oacute;digo
+		</th>
+		<th width="15%">
+				Periodo
+		</th>		
+		<th width="15%">
+				Estatus
+		</th>			
+		<th width="20%">
+				Observaciones
+		</th>				
+		<th width="10%">		
+		</th>
+	</tr> 
+</thead> 
+   #{list items:noactualizados, as:'encuesta'}
+	<tr class="${encuesta_parity}"> 
+		<td> 
+    	${encuesta.getCECONombre()}
+    	 
+    	</td>		
+	    <td> 
+    		${encuesta.ceco}
+    	</td>
+    	<td> 
+    		${encuesta.periodo}
+    	</td>
+    	<td> 
+    		<b>${encuesta.status}<b>
+    	</td>
+    	<td> 
+    		<b>${encuesta.observaciones}<b>
+    	</td>
+	    <td class="crudNew">
+			<a href="@{Funcional.llenarOrden(encuesta?.id)}">Llenar</a>
+		</td>
+	</tr>
+   #{/list} 
+	</table>
+</div>

@@ -1,0 +1,95 @@
+# Test data
+
+Valor(val1):
+   nombre: Porcentaje
+
+Valor(val2):
+   nombre: Bolivares
+   
+Valor(val3):
+   nombre: Entero
+      
+Rol(r1):
+       descripcion: admin
+       
+Rol(r2):
+       descripcion: encuestado
+       
+Rol(r3):
+       descripcion: funcional
+
+Rol(r4):
+       descripcion: generador       
+
+Rol(r5):
+       descripcion: seguridad              
+              
+TipoEncuesta(er2):
+       descripcion: Orden
+       
+TipoEncuesta(er3):
+       descripcion: Encuesta
+       
+TipoEncuesta(er4):
+       descripcion: Estadistico
+        
+
+Status(s1):
+       descripcion: Enviado a encuestado
+       
+Status(s2):
+       descripcion: Enviado a funcional
+       
+Status(s3):
+       descripcion: Validado por funcional
+       
+Status(s4):
+       descripcion: Rechazado por funcional
+
+User(admin):
+    activo:      true
+    nombre:        Leonardo Socorro
+    email:         gerardo@gmail.com
+    contrasena:    secret
+    usuario:       admin
+    rol:           r1
+    jefeCECO:      VD0100000
+
+User(encuestado):
+    activo:      true
+    nombre:        Encuestado
+    email:         costos@gmail.com
+    contrasena:    secret
+    usuario:       encuestado
+    rol:           r2
+
+User(funcional):
+    activo:      true
+    nombre:        Funcional
+    email:         funcional@gmail.com
+    contrasena:    secret
+    usuario:       funcional
+    rol:           r3
+    jefeCECO:      VD0100001
+
+User(generador):
+    activo:      true
+    nombre:        Maria Isabel Espina
+    email:         generador@gmail.com
+    contrasena:    secret
+    usuario:       generador
+    rol:           r4
+
+User(seguridad):
+    activo:      true
+    nombre:        Seguridad
+    email:         seguridad@gmail.com
+    contrasena:    secret
+    usuario:       seguridad
+    rol:           r5
+    
+Configuracion(conf1):
+    __AdminActivo: true
+    __EncuestadoActivo: true
+    __FuncionalActivo: true
+    __GeneradorActivo: true

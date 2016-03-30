@@ -1,0 +1,173 @@
+# You can specialize this file for each language.
+
+# Modulo CRUD
+
+crud.blank=Nuevo
+crud.index.title=Seleccionar la opci&oacute;n a Editar o el bot&oacute;n Agregar
+crud.index.objectType=Object type
+crud.index.elements=Men&uacute; 
+crud.index.action=
+crud.index.add=Agregar
+crud.add=Agregar &{%s}
+crud.list.title=&{%s}
+crud.list.size=%d Elemento(s)
+crud.list.totalSize=%d total
+crud.pagination.previous=« Anterior
+crud.pagination.next=Próximo »
+crud.pagination.last=Último »»
+crud.pagination.first=«« Primero
+crud.show.title=Editar &{%s}
+crud.save=Guardar
+crud.saveAndContinue=Guardar y seguir editando
+crud.cancel=Cancelar
+crud.hasErrors=Por favor, corregir los errores
+crud.blank.title=Agregar &{%s}
+crud.saveAndAddAnother=Guardar y crear otro
+crud.delete=Borrar &{%s}
+crud.created=&{%s} ha sido creado/a
+crud.saved=&{%s} ha sido guardado/a
+crud.deleted=&{%s} ha sido borrado/a
+crud.delete.error=No se puede borrar este objeto 
+encuesta.crud.delete.error=No se puede borrar la Encuesta dado que tiene Pasos asignados a ella
+crud.search=Buscar
+crud.none=(Nada)
+crud.selectValue=(Seleccione un valor)
+
+crud.help.required=Requerido.
+crud.help.minlength=La longitud minima es %d.
+crud.help.maxlength=la longitud maxima es %d.
+crud.help.email=Correo Electronico valido.
+crud.help.dateformat=YYYY-MM-DD formato.
+crud.help.numeric=Numerico.
+crud.help.min=Debe ser mayor a %d.
+crud.help.future=En el futuro.
+crud.help.past=En el pasado.
+crud.help.after=Despues de %s.
+crud.help.before=Antes de %s.
+crud.help.range=Entre %d y %d
+
+# Validation
+validation.required=Requerido
+validation.minSize=Longitud minima es %2$d
+validation.maxSize=Longitud maxima es %2$d
+validation.email=Correo invalido
+validation.range=Not in the range %2$d through %3$d
+validation.min=Must be greater than %2$d
+validation.max=Must be lower than %2$d
+validation.match=Must match %2$s
+validation.isTrue=Must be checked
+validation.equals=Must be equals to &{%2$s}
+validation.invalid=El valor es incorrecto
+validation.future=Must be in the future
+validation.after=Must be after %2$s
+validation.past=Must be in the past
+validation.before=Must be before %2$s
+validation.object=Validation failed
+validation.notFound=Object not found for id %2$s
+validation.unique = Ya existe un elemento con este nombre 
+
+# secure
+secure.username= Usuario
+secure.password = Clave
+secure.remember = Recordarme
+secure.signin = Entrar
+secure.error= Usuario o Clave incorrecta
+
+# Especificos de los forms
+__Activo = Estado
+activo = Estado
+observaciones = Observaciones
+email= Correo Electronico 
+usuario = Usuario Registrador
+contrasena = Contraseña
+nombre = Nombre
+descripcion = Descripción de Plantilla
+departamento = Departamento
+cargo = Cargo
+supervisor =Supervisor 
+Archivo = Ubicación del Archivo
+filename = Nombre del Archivo
+periodo = Periodo
+tarea = Tarea 
+status  = Estatus
+fechaRecibida = Fecha Recibida
+fechaEnviada = Fecha Enviada 
+de = De 
+para = Para
+plantilla = Plantilla
+rutaPlantilla = Ruta de la Plantilla
+
+tipo = Tipo de Cuestionario
+IDCentrosResponsabilidad = CeCo	
+descripcionCeco = Descripcion CeCo	
+fechaIngreso = Fecha de ingreso	
+cedula = Cedula Identidad	
+fechaNacimiento = Fecha de nacimiento	
+sexo = Sexo	
+entidadLegal = Entidad Legal	
+divisionPersonal = División de personal	
+subdivisionPersonal = Subdivisi&oacute;n personal	
+areaNomina = Área de nómina	
+descripcionAreaNomina = Descripcion Area de nómina	
+grupoPersonal = Grupo de personal	
+descripcionGripoPersonal = Descripcion Grupo de personal	
+areaPersonal = Area de personal	
+descripcionAreaPersonal = Descripcion Area de personal	
+posicion = Posici&oacute;n	
+unidadOrganizativa = Unidad organizativa	
+descripcionUnidadOrganizativa = Descripcion Unidad organizativa	
+gerenciaGeneral = Gerencia General
+
+application.logout= Salir
+
+user.errorusuario = Ya existe un Usuario con dicho identificador
+
+# Cadenas de Titulos de Modulos
+
+crud.maintitle = SASWeb
+
+crud.title= Administraci&oacute;n
+crud.subtitle=Portal SASWeb | M&oacute;dulo Administrador
+crud.home=Principal
+
+#Funcional
+funcional.title=Funcional
+
+#encuestado
+encuestado.title=Seguimiento
+encuestado.subtitle=Portal SASWeb | M&oacute;dulo Encuestado
+
+#configuracion
+periodoActual = Periodo Actual
+escenarioActual = Escenario Actual
+__AdminActivo = Activar Modulo Admin?
+__EncuestadoActivo = Activar Modulo Encuestado?
+__FuncionalActivo = Activar Modulo Funcional?
+__GeneradorActivo = Activar Modulo Generador?
+# Entidades
+
+generador.title = Administraci&oacute;n
+generador.subtitle = Portal SASWeb | M&oacute;dulo Generador
+
+seguridad.title = Administraci&oacute;n
+seguridad.subtitle = Portal SASWeb | M&oacute;dulo de Usuarios
+
+EncuestaForms = Preguntas
+EncuestaForm = Preguntas
+PermisoEncuesta = Asignar Cuestionario
+Encuestas = Generar Cuestionario
+encuesta = Cuestionario
+tipoValor = Tipo Valor
+unidadMedida = Unidad Medida
+modelo = Modelo
+escenario = Escenario
+ceco = CECO/Orden
+
+PermisoEncuestas = Asignar Cuestionario
+Configuraciones = Configuraci&oacute;n
+revisor = Usuario Validador
+encuestaValidador = Cuestionario Validador 
+
+encuestaform.errorencuesta = Ya existe una pregunta con esta posición
+encuestaform.valorinvalido = Este valor es inválido
+                                                                   

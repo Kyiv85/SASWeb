@@ -1,0 +1,58 @@
+#{extends 'Encuestado/encuestado_layout.html' /}
+
+<div id="crudShow" class="">  
+<h2>Resumen</h2>
+  
+<div class="objectForm">
+
+  <h5 id="crudShowTitle">Centro de Responsabilidad: ${perm.ceco} - ${perm.getCECONombre()}</h5>
+  <h5 id="crudShowTitle">Periodo: ${perm.periodo}</h5> 
+	  
+<div id="crudListTable1"> 
+<table> 
+<thead> 
+  <tr>
+   	<th>			
+		Actividades			 
+	</th>
+	
+	
+	  #{list items:encuestas, as:'encuesta'}
+		<th>			
+		${encuesta.unidadMedida}			 
+		</th>
+	  #{/list}
+		
+	</tr> 
+</thead>
+   #{list items:list, as:'item'} 
+	<tr class=""> 
+		<td>			
+		 ${item.Nombre_Actividad}			 
+		</td>
+		#{list items:item.DQF, as:'listDQF'}
+		      	<td>
+		       	  ${listDQF}
+		       	</td>
+	    #{/list}
+	</tr>	
+  #{/list}
+   <tr class=""> 
+		<td>
+		<b> Total</b>			
+		</td>
+			#{list items:suma, as:'sum'}
+		 	<td>	<b> ${sum} </b>	</td>
+	        #{/list}
+	</tr>	
+	</table>
+
+   <p class="crudButtons">
+	  
+   </p>
+   
+</div>
+
+</div>
+</div>
+	

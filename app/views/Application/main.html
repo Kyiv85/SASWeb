@@ -1,0 +1,79 @@
+#{extends 'Application/main_layout.html' /}
+
+<div id="crudIndex">
+
+	<h2>Roles</h2>
+
+	<table>
+		<thead>
+			<tr>
+				<th>&{'crud.index.elements'}</th>
+				<th width="20%">&{'crud.index.action'}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+     #{list items:roles, as:'rol'}
+     
+	 	#{if rol.descripcion == 'encuestado'}
+			<tr>
+				<td>
+					<a href="@{Application.changeRole(rol.id)}">Encuestado</a>
+				</td>
+				<td class="crudNew" >
+					
+				</td>
+			</tr>
+	    #{/if}
+	    
+	    #{if rol.descripcion == 'funcional'}
+			<tr>
+				<td>
+					<a href="@{Application.changeRole(rol.id)}">Funcional</a>
+				</td>
+				<td class="crudNew" >
+					
+				</td>
+			</tr>
+	    #{/if}
+	    
+	    #{if rol.descripcion == 'generador'}
+			<tr>
+				<td>
+					<a href="@{Application.changeRole(rol.id)}">Generador</a>
+				</td>
+				<td class="crudNew" >
+					
+				</td>
+			</tr>
+	    #{/if}
+	    
+	    #{if rol.descripcion == 'admin'}
+			<tr>
+				<td>
+					<a href="@{Application.changeRole(rol.id)}">Administrador</a>
+				</td>
+				<td class="crudNew" >
+					
+				</td>
+			</tr>
+	    #{/if}
+	    
+	    #{if rol.descripcion == 'seguridad'}
+			<tr>
+				<td>
+					<a href="@{Application.changeRole(rol.id)}">Seguridad</a>
+				</td>
+				<td class="crudNew" >
+					
+				</td>
+			</tr>
+	    #{/if}
+	 #{/list}
+			 
+			 
+		</tbody>
+	</table>
+
+</div>
+</div>

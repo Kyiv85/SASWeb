@@ -11,7 +11,79 @@
 #{form action:@Application.enviarFuncional(perm?.id), id:'encuestaForm', enctype:'multipart/form-data'}
 	  
 <div id="crudListTable1"> 
-<table> 
+	
+	<!--#{list items:encuestas, as:'encuesta'}-->
+	 <br><br>
+	 <div id="canvas-holder">
+		<!--<h3 style="margin-left: 35%;">${encuesta.nombre}</h3>-->
+		<br>
+		<canvas id="chart-area" width="800" height="600" style="margin-left: 20%;"/>
+	 </div>	
+	 
+	 <script>
+	  $(function(){
+
+    
+		var pieData = [];
+		#{list items:list, as:'item'}
+		 //var randomColor = "#"+Math.floor(Math.random()*16777215).toString(16);		 
+		 var randomColor = "#"+(Math.random()*0xFFFFFF<<0).toString(16);
+		 //var randomHighlight = "#"+Math.floor(Math.random()*16777215).toStri6);
+		 var randomHighlight = "#"+(Math.random()*0xFFFFFF<<0).toString(16);
+		 var actividad = "${item.Nombre_Actividad}";
+
+		 //#{list items:item.DQF, as:'listDQF'}
+	    
+		  val = ${item.DQF}+"";
+		  //console.log(valor.length);
+		  /*console.log("Valor de val "+val);
+		  var valor = Array.prototype.slice.call(val);
+		  valor.join('');*/
+
+		  var valor = (val.toString()).split(',').join('');
+		  console.log("Valor actuaaaaaaaaaaaaaaaaaaal "+valor);
+		  /*$.each(valor, function(index, value) {
+  			console.log(index + ': ' + value);
+
+  			if ((value == "") || (value == null) || (value == undefined)){
+  				valor = jQuery.grep(valor, function(value) {
+  					
+  					return (value != "" && value != null && n != undefined);
+				});
+  			}
+		  });*/
+		 //#{/list}
+
+		 //valor = 25;
+		 console.log("Antes "+valor);
+		 valor = parseInt(valor);
+		 console.log("Despues "+valor);
+		 var data =
+				{
+					value: valor,
+					color:randomColor,
+					highlight: randomHighlight,
+					label: actividad
+				}
+		 pieData.push(data);
+		 console.log("Valor "+valor);
+		 console.log("Color "+randomColor);
+		 console.log("randomHighlight "+randomHighlight);
+		 console.log("Actividad "+actividad);
+		#{/list}
+
+
+			window.onload = function(){
+				var ctx = document.getElementById("chart-area").getContext("2d");
+				window.myPie = new Chart(ctx).Pie(pieData);
+			};
+
+
+	  });	
+	 </script>
+	<!--#{/list}-->
+
+<!--<table> 
 <thead> 
   <tr>
    	<th>			
@@ -49,7 +121,7 @@
 	 #{/list}
 	
 	</tr>	
-	</table>
+	</table>-->
 
    <p class="crudButtons">
 	   <input type="submit" value="Enviar a Funcional" class="navigation_button">

@@ -1280,6 +1280,36 @@ public class Driver {
 	}
 
 	/**
+	 * Obtener Datos de actividades con modelo
+	 *
+	 * Ajustes al 03-03-2016
+	 *
+	 * @return
+	 */
+	public ArrayList<HashMap<String, String>> getActividadesDataNEW(String id, String modelo) {
+		Logger.info("Obteniendo Actividades Data NEW");
+
+		String bd = getModelNameAsDB(modelo);
+
+		String sql = "SELECT A.ID, A.Nombre" 
+					+ " FROM "+bd+".miembrodimension A"
+					+ " WHERE A._IDDimension = '"+id+"'"
+					+ " AND A.ID NOT IN ('SE_ASC_CO','SE_ND_CND'"
+					+ ",'US_CND','US_ASC_CO','PR_ND_CND','RG_RE_CND',"
+					+ "'PR_ASC_CO','TC_CND','TC_ASC','PC_ND_CND','PC_ASC_CO')"
+  					+ " AND NOT EXISTS (SELECT B.Padre_ID"
+                    + " FROM "+bd+".miembrodimension B"
+                    + " WHERE B._IDDimension = '"+id+"'"
+                    + " AND A.ID = B.Padre_ID)";
+
+		Logger.info(sql);
+		ArrayList<HashMap<String, String>> result = this
+				._queryWithManyResults(sql);
+
+		return result;
+	}
+
+	/**
 	 * Obtener Cuentas
 	 *
 	 * @return

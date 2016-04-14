@@ -1882,8 +1882,8 @@ public class Application extends Controller {
 		Logger.info("El usuario " + Security.connected()
 				+ " accedio a la vista de mostrar resumen de estadistico");
 
-		/*int i = 0;
-		float dqfTotal = 0;
+		int j = 0;
+		/*float dqfTotal = 0;
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		ArrayList<HashMap<String, Object>> rows = new ArrayList<HashMap<String, Object>>();
@@ -1893,6 +1893,7 @@ public class Application extends Controller {
 		//Logger.info("Dimension fuente "+dimFuente);
 
 		Driver driv = new Driver();
+		ArrayList<HashMap<String, Object>> rows = new ArrayList<HashMap<String, Object>>();
 
 		String data[] = dimFuente.split("-");
 
@@ -1934,89 +1935,45 @@ public class Application extends Controller {
 
 		String nombreActividad = dimension.toString();
 
-		ArrayList<HashMap<String, String>> list = driv.getEstadisticoRowDataSingles(dimFuente);
+		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+		String dqfSum = "";
 
-		HashMap<String, String> dqfval = driv.getDQFSumEstadistico(dimFuente);
+		try {
 
-		String dqfSum = (dqfval.get("Total")).toString();
+			list = driv.getEstadisticoRowDataSingles(dimFuente);
 
-		/*try {
-
-			ArrayList<HashMap<String, String>> filas = driv.getEstadisticoRowDataSingles(dimFuente);
-
-			Iterator<HashMap<String, String>> it = result.iterator();
+			Iterator<HashMap<String, String>> it = list.iterator();
 			
 			while (it.hasNext()) {
 
 				HashMap<String, String> tmp = it.next();
 				HashMap<String, Object> row = new HashMap<String, Object>();
 
-				row.put("id", tmp.get("DimensionDestino"));
-				row.put("cell", tmp);
+				//Logger.info("DestinoDimMemberRef1 "+tmp.get("DestinoDimMemberRef1"));
+				HashMap<String,String> cliente = driv.getDescMiembDim(tmp.get("DestinoDimMemberRef1"),"A-2014","Modelo_COM");
+				Logger.info("Cliente "+cliente.get("Nombre"));
+				//Logger.info("DestinoDimMemberRef2 "+tmp.get("DestinoDimMemberRef2"));
+				HashMap<String,String> producto = driv.getDescMiembDim(tmp.get("DestinoDimMemberRef2"),"A-2014","Modelo_COM");
+				Logger.info("Producto Comercial "+producto.get("Nombre"));
+				row.put("conductor", tmp.get("_NombreConductor"));
+				row.put("cliente",cliente.get("Nombre"));
+				row.put("producto",producto.get("Nombre"));
+				row.put("dqf", tmp.get("DQF"));
 				rows.add(row);
-				i++;
+				j++;
 			}
 
-			HashMap<String, String> dqfSum = 
-				            driv.getDQFSumEstadistico(dimFuente);
+			HashMap<String, String> dqfval = driv.getDQFSumEstadistico(dimFuente);
 
-			if (!dqfSum.get("Total").equals("")) {
-				dqfTotal = Float.parseFloat(dqfSum.get("Total")); 
-			}
-
-			userdata.put("cell.DestinoDimMemberRef2", "Total:");
-			userdata.put("cell.DQF", dqfTotal);
-
-			map.put("total", 1);
-			map.put("pages", 1);
-			map.put("records", result.size());
-
-			map.put("rows", rows);
-			map.put("userdata", userdata);
+			dqfSum = (dqfval.get("Total")).toString();
 
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		while (ite.hasNext()) {
-
-				EncuestaForm tmp = ite.next();
-				ArrayList<HashMap<String, String>> result = 
-					            driver.getEstadisticoRowDataSingle(modelo, dimFuente, tmp.nombreConductor);
-
-				suma.add(driver.getFilasSumEstadistico(modelo, periodo, dimFuente, tmp.nombreConductor));
-
-				Iterator<HashMap<String, String>> rowList = result.iterator();
-
-				while (rowList.hasNext()) {
-
-					HashMap<String, String> tmpRow = rowList.next();
-					StringBuilder sb = new StringBuilder();
-
-					for (String s : keysDestino) {
-
-						String dimension = tmpRow.get(s);
-
-						if (!dimension.equals("")) {
-							sb.append(dimension);
-							sb.append("-");
-						}
-					}
-					sb.deleteCharAt(sb.length() - 1);
-					tmpRow.put("Nombre_Actividad", sb.toString());
-					tmpRow.put("pregunta", String.valueOf(preguntaPos));
-				}
-
-				preguntaPos++;
-				items.addAll(result);
-			}
-
-		// Unir lineas iguales
-		list = Utilities.getMergedList(items, preguntas.size());
-		*/	
-
-		render(nombreActividad, periodo, dimFuente, list, dqfSum);
+		
+		render(nombreActividad, periodo, dimFuente, rows, dqfSum);
 	}
 	
 
@@ -2033,6 +1990,7 @@ public class Application extends Controller {
 				+ " accedio a la vista de ver resumen de estadistico");
 
 		Driver driv = new Driver();
+		ArrayList<HashMap<String, Object>> rows = new ArrayList<HashMap<String, Object>>();
 
 		//Traer el estadistico a llenar
 		HashMap<String, String> estActual = driv.getEstadisticoActual(region,proceso,unidad,segmento,1);
@@ -2076,15 +2034,47 @@ public class Application extends Controller {
 
 		Logger.info("Dimension fuente "+dimFuente);
 
-		ArrayList<HashMap<String, String>> list = driv.getEstadisticoRowDataSingles(dimFuente);
+		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+		String dqfSum = "";
+		int j=0;
 
-		HashMap<String, String> dqfval = driv.getDQFSumEstadistico(dimFuente);
+		try {
 
-		String dqfSum = (dqfval.get("Total")).toString();
+			list = driv.getEstadisticoRowDataSingles(dimFuente);
 
-		render(nombreActividad, periodo, dimFuente, list, dqfSum);
+			Iterator<HashMap<String, String>> it = list.iterator();
+			
+			while (it.hasNext()) {
+
+				HashMap<String, String> tmp = it.next();
+				HashMap<String, Object> row = new HashMap<String, Object>();
+
+				//Logger.info("DestinoDimMemberRef1 "+tmp.get("DestinoDimMemberRef1"));
+				HashMap<String,String> cliente = driv.getDescMiembDim(tmp.get("DestinoDimMemberRef1"),"A-2014","Modelo_COM");
+				Logger.info("Cliente "+cliente.get("Nombre"));
+				//Logger.info("DestinoDimMemberRef2 "+tmp.get("DestinoDimMemberRef2"));
+				HashMap<String,String> producto = driv.getDescMiembDim(tmp.get("DestinoDimMemberRef2"),"A-2014","Modelo_COM");
+				Logger.info("Producto Comercial "+producto.get("Nombre"));
+				row.put("conductor", tmp.get("_NombreConductor"));
+				row.put("cliente",cliente.get("Nombre"));
+				row.put("producto",producto.get("Nombre"));
+				row.put("dqf", tmp.get("DQF"));
+				rows.add(row);
+				j++;
+			}
+
+			HashMap<String, String> dqfval = driv.getDQFSumEstadistico(dimFuente);
+
+			dqfSum = (dqfval.get("Total")).toString();
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		
+		render(nombreActividad, periodo, dimFuente, rows, dqfSum);
 	}
-
 
 
 	/**

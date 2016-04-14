@@ -28,19 +28,19 @@
   </tr> 
  </thead>
  <tbody>
- #{list items:list, as:'item'} 
+#{list items:rows, as:'item'} 
   <tr class=""> 
 	<td>			
-		${item._NombreConductor}			 
+		${item.conductor}			 
 	</td>
 	<td>
-		${item.DestinoDimMemberRef1}
+		${item.cliente}
 	</td>
 	<td>
-		${item.DestinoDimMemberRef2}
+		${item.producto}
 	</td>
 	<td>
-	    ${item.DQF}
+	    ${item.dqf}
 	</td>
   </tr>	
  #{/list}

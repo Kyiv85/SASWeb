@@ -77,8 +77,8 @@
             colModel:[
                 {name:'id', label:'aaaa', hidden:true, sortable:false, resizable: true},
                 {name:'cell._NombreConductor', label:'Conductor', align:"left", sortable:false, resizable: true},
-                {name:'cell.DestinoDimMemberRef1', label:'Clientes', align:"left", sortable:false, resizable: true},
-                {name:'cell.DestinoDimMemberRef2', label:'Productos Comerciales', align:"left", sortable:false, resizable: true},
+                {name:'cliente', label:'Clientes', align:"left", sortable:false, resizable: true},
+                {name:'producto', label:'Productos Comerciales', align:"left", sortable:false, resizable: true},
                 {name:'cell.DQF', label:'Unidad de Medida', align:"left", formatter:"number"}
             ],
 			footerrow : true,
@@ -436,7 +436,7 @@
 			
 			<select class='actividad' id="objectConductor" name="objectConductor" style="width: 300px">
 				#{list items:conductores, as:'elem'}
-					<option value="${elem._NombreConductor}">${elem._NombreConductor}</option>
+					<option value="${elem.Nombre}">${elem.Nombre}</option>
 				#{/list}
 		    </select>
 

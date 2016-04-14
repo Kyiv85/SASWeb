@@ -35,13 +35,8 @@
 		 //#{list items:item.DQF, as:'listDQF'}
 	    
 		  val = ${item.DQF}+"";
-		  //console.log(valor.length);
-		  /*console.log("Valor de val "+val);
-		  var valor = Array.prototype.slice.call(val);
-		  valor.join('');*/
-
 		  var valor = (val.toString()).split(',').join('');
-		  console.log("Valor actuaaaaaaaaaaaaaaaaaaal "+valor);
+		  //console.log("Valor actuaaaaaaaaaaaaaaaaaaal "+valor);
 		  /*$.each(valor, function(index, value) {
   			console.log(index + ': ' + value);
 
@@ -54,10 +49,9 @@
 		  });*/
 		 //#{/list}
 
-		 //valor = 25;
-		 console.log("Antes "+valor);
+		 //console.log("Antes "+valor);
 		 valor = parseInt(valor);
-		 console.log("Despues "+valor);
+		 //console.log("Despues "+valor);
 		 var data =
 				{
 					value: valor,
@@ -66,10 +60,10 @@
 					label: actividad
 				}
 		 pieData.push(data);
-		 console.log("Valor "+valor);
-		 console.log("Color "+randomColor);
-		 console.log("randomHighlight "+randomHighlight);
-		 console.log("Actividad "+actividad);
+		 //console.log("Valor "+valor);
+		 //console.log("Color "+randomColor);
+		 //console.log("randomHighlight "+randomHighlight);
+		 //console.log("Actividad "+actividad);
 		#{/list}
 
 
@@ -82,46 +76,6 @@
 	  });	
 	 </script>
 	<!--#{/list}-->
-
-<!--<table> 
-<thead> 
-  <tr>
-   	<th>			
-		Actividades			 
-	</th>
-	
-	  #{list items:encuestas, as:'encuesta'}
-		<th>			
-		${encuesta.unidadMedida}			 
-		</th>
-	  #{/list}
-		
-	</tr> 
-</thead>
-  #{list items:list, as:'item'} 
-	<tr class=""> 
-		<td>			
-		 ${item.Nombre_Actividad}			 
-		</td>
-		#{list items:item.DQF, as:'listDQF'}
-		      	<td>
-		       	  ${listDQF}
-		       	</td>
-	    #{/list}
-	</tr>	
-  #{/list}
-  
-   <tr class=""> 
-		<td>
-		<b> Total</b>			
-		</td>
-	
-	#{list items:suma, as:'sum'}
-		 	<td>	<b> ${sum} </b>	</td>
-	 #{/list}
-	
-	</tr>	
-	</table>-->
 
    <p class="crudButtons">
 	   <input type="submit" value="Enviar a Funcional" class="navigation_button">

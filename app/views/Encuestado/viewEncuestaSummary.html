@@ -7,103 +7,86 @@
 
   <h5 id="crudShowTitle">Centro de Responsabilidad: ${perm.ceco} - ${perm.getCECONombre()}</h5>
   <h5 id="crudShowTitle">Periodo: ${perm.periodo}</h5> 
+
+#{form action:@Application.enviarFuncional(perm?.id), id:'encuestaForm', enctype:'multipart/form-data'}
 	  
 <div id="crudListTable1"> 
-	<div id="canvas-holder">
-		<canvas id="chart-area" width="300" height="300"/>
-	</div>
+	
+	<!--#{list items:encuestas, as:'encuesta'}-->
+	 <br><br>
+	 <div id="canvas-holder">
+		<!--<h3 style="margin-left: 35%;">${encuesta.nombre}</h3>-->
+		<br>
+		<canvas id="chart-area" width="800" height="600" style="margin-left: 20%;"/>
+	 </div>	
+	 
+	 <script>
+	  $(function(){
 
-	<script>
+	  	$("#devolver").click(function(){
+	  		location.href = '/SASWeb/encuestado';
+	  	});
 
+    
+		var pieData = [];
+		#{list items:list, as:'item'}
+		 //var randomColor = "#"+Math.floor(Math.random()*16777215).toString(16);		 
+		 var randomColor = "#"+(Math.random()*0xFFFFFF<<0).toString(16);
+		 //var randomHighlight = "#"+Math.floor(Math.random()*16777215).toStri6);
+		 var randomHighlight = "#"+(Math.random()*0xFFFFFF<<0).toString(16);
+		 var actividad = "${item.Nombre_Actividad}";
 
-		var pieData = [
+		 //#{list items:item.DQF, as:'listDQF'}
+	    
+		  val = ${item.DQF}+"";
+		  var valor = (val.toString()).split(',').join('');
+		  //console.log("Valor actuaaaaaaaaaaaaaaaaaaal "+valor);
+		  /*$.each(valor, function(index, value) {
+  			console.log(index + ': ' + value);
+
+  			if ((value == "") || (value == null) || (value == undefined)){
+  				valor = jQuery.grep(valor, function(value) {
+  					
+  					return (value != "" && value != null && n != undefined);
+				});
+  			}
+		  });*/
+		 //#{/list}
+
+		 //console.log("Antes "+valor);
+		 valor = parseInt(valor);
+		 //console.log("Despues "+valor);
+		 var data =
 				{
-					value: 300,
-					color:"#F7464A",
-					highlight: "#FF5A5E",
-					label: "Red"
-				},
-				{
-					value: 50,
-					color: "#46BFBD",
-					highlight: "#5AD3D1",
-					label: "Green"
-				},
-				{
-					value: 100,
-					color: "#FDB45C",
-					highlight: "#FFC870",
-					label: "Yellow"
-				},
-				{
-					value: 40,
-					color: "#949FB1",
-					highlight: "#A8B3C5",
-					label: "Grey"
-				},
-				{
-					value: 120,
-					color: "#4D5360",
-					highlight: "#616774",
-					label: "Dark Grey"
+					value: valor,
+					color:randomColor,
+					highlight: randomHighlight,
+					label: actividad
 				}
+		 pieData.push(data);
+		 //console.log("Valor "+valor);
+		 //console.log("Color "+randomColor);
+		 //console.log("randomHighlight "+randomHighlight);
+		 //console.log("Actividad "+actividad);
+		#{/list}
 
-			];
 
 			window.onload = function(){
-				var ctx = document.getElementById("chart-area").getContext("3d");
+				var ctx = document.getElementById("chart-area").getContext("2d");
 				window.myPie = new Chart(ctx).Pie(pieData);
 			};
 
 
+	  });	
+	 </script>
+	<!--#{/list}-->
 
-	</script>
-
-
-<!--<table> 
-<thead> 
-  <tr>
-   	<th>			
-		Actividades			 
-	</th>
-	
-	
-	  #{list items:encuestas, as:'encuesta'}
-		<th>			
-		${encuesta.unidadMedida}			 
-		</th>
-	  #{/list}
-		
-	</tr> 
-</thead>
-   #{list items:list, as:'item'} 
-	<tr class=""> 
-		<td>			
-		 ${item.Nombre_Actividad}			 
-		</td>
-		#{list items:item.DQF, as:'listDQF'}
-		      	<td>
-		       	  ${listDQF}
-		       	</td>
-	    #{/list}
-	</tr>	
-  #{/list}
-   <tr class=""> 
-		<td>
-		<b> Total</b>			
-		</td>
-			#{list items:suma, as:'sum'}
-		 	<td>	<b> ${sum} </b>	</td>
-	        #{/list}
-	</tr>	
-	</table>
--->
    <p class="crudButtons">
-	  
+	   <input id="devolver" type="button" name="_reject" value="Volver a Encuestas">
    </p>
    
 </div>
-
+#{/form}
 </div>
 </div>
 	

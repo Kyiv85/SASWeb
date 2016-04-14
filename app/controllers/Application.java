@@ -754,7 +754,15 @@ public class Application extends Controller {
 				HashMap<String, String> tmp = it.next();
 				HashMap<String, Object> row = new HashMap<String, Object>();
 
+				//Logger.info("DestinoDimMemberRef1 "+tmp.get("DestinoDimMemberRef1"));
+				HashMap<String,String> cliente = driv.getDescMiembDim(tmp.get("DestinoDimMemberRef1"),"A-2014","Modelo_COM");
+				Logger.info("Cliente "+cliente.get("Nombre"));
+				//Logger.info("DestinoDimMemberRef2 "+tmp.get("DestinoDimMemberRef2"));
+				HashMap<String,String> producto = driv.getDescMiembDim(tmp.get("DestinoDimMemberRef2"),"A-2014","Modelo_COM");
+				Logger.info("Producto Comercial "+producto.get("Nombre"));
 				row.put("id", tmp.get("DimensionDestino"));
+				row.put("cliente",cliente.get("Nombre"));
+				row.put("producto",producto.get("Nombre"));
 				row.put("cell", tmp);
 				rows.add(row);
 				i++;

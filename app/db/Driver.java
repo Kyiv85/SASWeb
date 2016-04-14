@@ -923,8 +923,8 @@ public class Driver {
 		
 		Logger.info("Entrando en getEstadisticoRowDataSingles()");
 	
-		String sql = "SELECT DQF,TC.Nombre AS DestinoDimMemberRef1, PC.Nombre AS DestinoDimMemberRef2,"
-					+ "_NombreConductor FROM TMP_COM.AsignacionTemporal,"
+		String sql = "SELECT A.DQF,A.DestinoDimMemberRef1,A.DestinoDimMemberRef2,"
+					+ "_NombreConductor FROM TMP_COM.AsignacionTemporal A,"
 					+ "TMP_COM.miembrodimension TC,TMP_COM.miembrodimension PC"
 					+ " WHERE DimensionFuente = '"+dimensionFuente+"'"
 					+ " AND _TipoModuloABCFuente = 'ACTIVITY' "
@@ -1433,14 +1433,14 @@ public class Driver {
 	 */
 	public ArrayList<HashMap<String, String>> getConductorEst(String dimFuente) {
 
-		int cond = getCantAsignacionesEst(dimFuente);
-		int cant = getCantConductorEst(dimFuente);
+		//int cond = getCantAsignacionesEst(dimFuente);
+		//int cant = getCantConductorEst(dimFuente);
 
 		ArrayList<HashMap<String, String>> result = new ArrayList<HashMap<String, String>>();
 
 		Logger.info("Obteniendo conductor de estadistico");
 		
-		if(cond>0){
+		/*if(cond>0){
 
 			String sql = "SELECT DISTINCT _NombreConductor AS id, _NombreConductor AS nombre" 
 					+ " FROM TMP_COM.AsignacionTemporal"
@@ -1455,14 +1455,17 @@ public class Driver {
 		}
 		else { 
 			if(cant==0){  		
-		 
+		*/ 
 				String sql = "SELECT Nombre AS id, Nombre AS nombre"
-  					+ " FROM TMP_COM.conductor";
+  					+ " FROM TMP_COM.conductor"
+  					+ " WHERE Nombre NOT IN ('% BP RSC x % Ventas Efectivas','% Compensacion Variable x Adiciones',"
+  					+ " '% de Dedicación a los Servicios','Asignacion Directa','Contratados y Contratistas','Contrato de Mantenimiento o de Servicio',"
+  					+ " 'Mano de Obra y Otros Gastos','Materiales y Consumibles','Porcentaje')";
 
 		 		Logger.info(sql);
 		 		result = this._queryWithManyResults(sql);
 		
-			}else{
+		/*	}else{
 		
 				String sql = "SELECT DISTINCT _NombreConductor AS id, _NombreConductor AS nombre"
   						+ " FROM TMP_COM.asignacion"
@@ -1473,8 +1476,8 @@ public class Driver {
 				Logger.info(sql);
 		 		result = this._queryWithManyResults(sql);
 		
-			}
-		}
+		//	}
+		//}*/
 
 		return result;
 	}
